@@ -1,0 +1,14 @@
+{
+  "env": {
+    "browser": false,
+    "jest": true,
+    "node": true
+  },
+  "extends": "airbnb-base",
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "no-console": "off"
+  }
+}
