@@ -2,5 +2,6 @@
   "eslint.workingDirectories": [
     "./client",
     "./server"
-  ]
+  ],
+  "editor.tabSize": 2
 }
