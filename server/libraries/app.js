@@ -1,9 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
 
+const users = require('./routes/Users');
+
 const app = express();
 
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev'));
-app.get('/', (req, res) => { res.send('hello world'); });
+app.use('/', users);
 
 module.exports = app;
