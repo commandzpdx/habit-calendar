@@ -5,8 +5,8 @@ const Users = Router();
 
 Users
 
-  .get('/', (req, res, next) => {
-    res.send('hello world');
+  .get('/', (req, res) => {
+    res.send('helloooo world');
   });
 
 module.exports = Users;
