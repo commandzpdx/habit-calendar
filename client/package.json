@@ -1,0 +1,35 @@
+{
+  "name": "habit-cal",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "normalize.css": "^7.0.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router-dom": "^4.1.1"
+  },
+  "devDependencies": {
+    "babel-preset-airbnb": "^2.2.3",
+    "concurrently": "^3.4.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1",
+    "node-sass-chokidar": "0.0.2",
+    "react-scripts": "1.0.7"
+  },
+  "scripts": {
+    "build": "npm run build:css && react-scripts build",
+    "build:css": "node-sass-chokidar --include-path ./src/styles --include-path ./node_modules src/ --output src/ --output-style compressed",
+    "build:css:watch": "npm run build:css && node-sass-chokidar --include-path ./src/styles --include-path ./node_modules src/ --output src/ --output-style compressed --watch --recursive",
+    "eject": "react-scripts eject",
+    "start": "concurrently 'npm run build:css:watch' 'react-scripts start'",
+    "prebuild": "rm -rf ../server/public",
+    "pretest": "eslint .",
+    "postbuild": "mv build ../server/public",
+    "test": "react-scripts test --env=jsdom"
+  }
+}
