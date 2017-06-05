@@ -3,8 +3,12 @@ import styles from './NavBar.css';
 
 export default function NavBar() {
   return (
-    <div className={styles.bar}>
-
-    </div>
+    <nav className={styles.bar}>
+      <div className={styles.logo}>logo</div>
+      <ul> 
+        <li className={styles.link}>home</li>
+        <li className={styles.link}>signup</li>
+      </ul>
+    </nav>
   )
 }
