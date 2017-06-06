@@ -1,10 +1,11 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import SignIn from './SignIn';
 
 export default function Main() {
   return (
-    <div>
-      <SignIn />
-    </div>
-  )
+    <main>
+      <Route path="/signin" component={SignIn} />
+    </main>
+  );
 }
