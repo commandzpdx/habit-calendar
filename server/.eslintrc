@@ -1,7 +1,7 @@
 {
   "env": {
     "browser": false,
-    "jest": true,
+    "mocha": true,
     "node": true
   },
   "extends": "airbnb-base",
@@ -9,6 +9,7 @@
     "import"
   ],
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "padded-blocks": "off"
   }
 }
