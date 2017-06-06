@@ -9,6 +9,8 @@ export default function SignIn() {
         <input type="text" placeholder="email" required />
         <br />
         <input type="text" placeholder="password" required />
+        <br />
+        <button>submit</button>
       </form>
     </div>
   );
