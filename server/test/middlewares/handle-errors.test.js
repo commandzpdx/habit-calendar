@@ -5,7 +5,7 @@ const assert = chai.assert;
 const errorHandler = require('../../middlewares/handle-errors');
 const User = require('../../models/user');
 
-describe('handle-errors', () => {
+describe.only('handle-errors', () => {
 
   // Mock up the response object that's returned in handle-errors.js
   const resObj = {
@@ -18,6 +18,28 @@ describe('handle-errors', () => {
       return this;
     },
   };
+
+  it('recognizes non Mongoose validation errors', () => {
+
+    const newError = new Error('teapot message');
+    newError.code = 418;
+    newError.errors = '418 is a teapot error';
+    newError.name = 'not Mongoose validation error';
+
+    errorHandler()(newError, null, resObj);
+    assert.equal(resObj.statusCode, 418);
+    assert.equal(resObj.body.message, 'teapot message');
+    assert.equal(resObj.body.errors, '418 is a teapot error');
+  });
+
+  it('recognizes internal server errors', () => {
+
+    const newError = new Error();
+
+    errorHandler()(newError, null, resObj);
+    assert.equal(resObj.statusCode, 500);
+    assert.equal(resObj.body.message, 'internal server error');
+  });
 
   it('recognizes missing password', () => {
     return new User({
@@ -60,4 +82,5 @@ describe('handle-errors', () => {
         assert.equal(resObj.body.errors.lastName.message, 'Path `lastName` is required.');
       });
   });
+
 });
