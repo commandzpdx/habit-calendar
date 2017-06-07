@@ -7,15 +7,14 @@ const Router = express.Router;
 const Users = Router();
 
 function hasEmailAndPassword(req, res, next) {
-  const signee = req.body;
 
-  if (!signee.email || !signee.password) {
+  if (!req.body.email || !req.body.password) {
     return next({
       code: 400,
       error: 'Email and password must be provided',
     });
   }
-  next();
+  return next();
 }
 
 Users
@@ -24,24 +23,21 @@ Users
   })
 
   .post('/signup', bodyParser, hasEmailAndPassword, (req, res, next) => {
-    let data = req.body;
-    let userObj = {};
+    const data = req.body;
 
     User.find({ email: data.email }).count()
       .then((count) => {
         if (count > 0) {
-          throw new Error({
-            code: 400,
-            error: `The email you have entered, ${data.email}, already has an account. Please signup with a different email.`,
-          });
+          const badEmail = new Error(
+            `The email you have entered, ${data.email}, already has an account. Please signup with a different email.`,
+          );
+          badEmail.code = 400;
+          throw badEmail;
         }
         return new User(data).save();
       })
       .then((user) => {
-        userObj = user;
-      })
-      .then((userObject) => {
-        res.send({ userObject });
+        res.json({ user });
       })
       .catch(next);
   })
