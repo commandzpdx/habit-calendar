@@ -1,20 +1,17 @@
 {
-  "name": "server",
+  "name": "habit-calendar",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "node index.js",
     "start-watch": "nodemon index.js",
     "pretest": "eslint .",
     "test": "mocha --recursive"
   },
-  "author": "commandzpdx",
-  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
-    "eslint-config-airbnb-base": "^11.2.0",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.10.4",
@@ -24,8 +21,19 @@
     "chai": "^4.0.2",
     "chai-http": "^3.0.0",
     "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.4.2",
     "nodemon": "^1.11.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/commandzpdx/habit-calendar.git"
+  },
+  "author": "commandzpdx (https://github.com/commandzpdx)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/commandzpdx/habit-calendar/issues"
+  },
+  "homepage": "https://github.com/commandzpdx/habit-calendar#readme"
 }
