@@ -1,1 +1,9 @@
 @import 'normalize.css/normalize';
+
+// variables
+@import 'variables';
+
+// smacss
+@import 'base';
+@import 'layout';
+@import 'module';
