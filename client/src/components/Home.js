@@ -3,7 +3,7 @@ import React from 'react';
 export default function Home() {
   return (
     <div>
-      <h1>App Name</h1>
+      <h1>didju</h1>
       <div>graphic placeholder</div>
 
       <h3>some sort of tagline</h3>
