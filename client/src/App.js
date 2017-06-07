@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-//import SignIn from './components/SignIn';
 import NavBar from './components/NavBar';
 import Main from './components/Main';
 import Footer from './components/Footer';
 
 class App extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      signedIn: false,
+      token: null,
+    };
+  }
+
   render() {
     return (
       <Router>
