@@ -5,7 +5,7 @@ const assert = chai.assert;
 const errorHandler = require('../../middlewares/handle-errors');
 const User = require('../../models/user');
 
-describe.only('handle-errors', () => {
+describe('handle-errors', () => {
 
   // Mock up the response object that's returned in handle-errors.js
   const resObj = {
