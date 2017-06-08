@@ -19,6 +19,28 @@ describe('handle-errors', () => {
     },
   };
 
+  it('recognizes non Mongoose validation errors', () => {
+
+    const newError = new Error('teapot message');
+    newError.code = 418;
+    newError.errors = '418 is a teapot error';
+    newError.name = 'not Mongoose validation error';
+
+    errorHandler()(newError, null, resObj);
+    assert.equal(resObj.statusCode, newError.code);
+    assert.equal(resObj.body.message, newError.message);
+    assert.equal(resObj.body.errors, newError.errors);
+  });
+
+  it('recognizes internal server errors', () => {
+
+    const newError = new Error();
+
+    errorHandler()(newError, null, resObj);
+    assert.equal(resObj.statusCode, 500);
+    assert.equal(resObj.body.message, 'internal server error');
+  });
+
   it('recognizes missing password', () => {
     return new User({
       firstName: 'joe',
@@ -60,4 +82,5 @@ describe('handle-errors', () => {
         assert.equal(resObj.body.errors.lastName.message, 'Path `lastName` is required.');
       });
   });
+
 });
