@@ -27,9 +27,9 @@ describe('handle-errors', () => {
     newError.name = 'not Mongoose validation error';
 
     errorHandler()(newError, null, resObj);
-    assert.equal(resObj.statusCode, 418);
-    assert.equal(resObj.body.message, 'teapot message');
-    assert.equal(resObj.body.errors, '418 is a teapot error');
+    assert.equal(resObj.statusCode, newError.code);
+    assert.equal(resObj.body.message, newError.message);
+    assert.equal(resObj.body.errors, newError.errors);
   });
 
   it('recognizes internal server errors', () => {

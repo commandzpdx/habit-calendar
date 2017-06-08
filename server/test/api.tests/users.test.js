@@ -1,9 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-// const app = require('../../libraries/app');
+const app = require('../../libraries/app');
 const database = require('../../libraries/database');
-const server = require('../../libraries/server');
 
 const assert = chai.assert;
 let request;
@@ -13,7 +12,7 @@ chai.use(chaiHttp);
 before(() => database.connect(process.env.MONGODB_URI_TEST));
 
 before(() => {
-  request = chai.request(server);
+  request = chai.request(app);
   return request;
 });
 
@@ -28,25 +27,23 @@ describe('user', () => {
   //   password: 'asdfasdf',
   // };
 
-
   describe('user management', () => {
 
-    const badRequest = (url, data, error) =>
-      request
-        .post(url)
-        .send(data)
+    it('signup requires not just password', () => {
+      return request
+        .post('/api/users')
+        .send({ password: 'asdfasdf' })
         .then(
         () => { throw new Error('status should not be ok'); },
         (res) => {
+          const responseErrors = JSON.parse(res.response.text);
           assert.equal(res.status, 400);
-          assert.equal(res.response.body.error, error);
+          assert.isOk(responseErrors.errors.email);
+          assert.isOk(responseErrors.errors.firstName);
+          assert.isOk(responseErrors.errors.lastName);
         },
       );
-
-    it('signup requires username', () =>
-      badRequest('/signup', { password: 'asdfasdf' },
-        'Username, email, and password must be provided'),
-    );
+    });
 
   });
 
