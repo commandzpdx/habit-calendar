@@ -1,5 +1,5 @@
 import React from 'react';
-import testSVG from '../assets/spiral_test.svg';
+import SpiralCal from './SpiralCal';
 
 export default function UserMain() {
   return (
@@ -8,7 +8,7 @@ export default function UserMain() {
       <h3>Category</h3>
       <h3>Habit (optional)</h3>
       <div>
-        <img src={testSVG}/>
+        <SpiralCal />
       </div>
     </div>
   );
