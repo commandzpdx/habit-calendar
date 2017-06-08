@@ -56,6 +56,21 @@ describe('user', () => {
       );
     });
 
+    it('signup requires not just first and last name', () => {
+      return request
+        .post('/api/users')
+        .send({ firstName: 'first', lastName: 'last' })
+        .then(
+        () => { throw new Error('status should not be ok'); },
+        (res) => {
+          const responseErrors = JSON.parse(res.response.text);
+          assert.equal(res.status, 400);
+          assert.isOk(responseErrors.errors.password);
+          assert.isOk(responseErrors.errors.email);
+        },
+      );
+    });
+
   });
 
 });
