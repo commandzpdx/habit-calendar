@@ -1,10 +1,10 @@
 import React from 'react';
-import spiralSVG from '../assets/spiral_test.svg';
+import spiralSVG from '../assets/spiral_progress.svg';
 
 export default function SpiralCal() {
   return (
     <div>
-      <img src={spiralSVG} />
+      <img alt="spiral-calendar" src={spiralSVG} />
     </div>
   );
 }
