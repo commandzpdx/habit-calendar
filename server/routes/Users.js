@@ -4,48 +4,34 @@ const express = require('express');
 const User = require('../models/user');
 
 const Router = express.Router;
-const Users = Router();
+const users = Router();
 
-function hasEmailAndPassword(req, res, next) {
-  const signee = req.body;
-
-  if (!signee.email || !signee.password) {
-    return next({
-      code: 400,
-      error: 'Email and password must be provided',
-    });
-  }
-  next();
-}
-
-Users
+users
   .get('/', (req, res) => {
     res.send('helloooo world');
   })
 
-  .post('/signup', bodyParser, hasEmailAndPassword, (req, res, next) => {
-    let data = req.body;
-    let userObj = {};
+  .post('/', bodyParser(), (req, res, next) => {
+    const data = req.body;
 
-    User.find({ email: data.email }).count()
+    return User.find({ email: data.email }).count()
       .then((count) => {
         if (count > 0) {
-          throw new Error({
-            code: 400,
-            error: `The email you have entered, ${data.email}, already has an account. Please signup with a different email.`,
-          });
+          const badEmail = new Error(
+            `${data.email} already has an account. Please signup with a different email.`,
+          );
+          badEmail.name = 'email already exists';
+          badEmail.code = 400;
+          throw badEmail;
         }
         return new User(data).save();
       })
       .then((user) => {
-        userObj = user;
-      })
-      .then((userObject) => {
-        res.send({ userObject });
+        return res.json({ user });
       })
       .catch(next);
   })
 
-  ; // end Users routes
+  ; // end users routes
 
-module.exports = Users;
+module.exports = users;
