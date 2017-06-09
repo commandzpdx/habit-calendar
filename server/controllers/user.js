@@ -1,17 +1,7 @@
-const bodyParser = require('body-parser').json;
-const express = require('express');
-
 const User = require('../models/user');
 
-const Router = express.Router;
-const users = Router();
-
-users
-  .get('/', (req, res) => {
-    res.send('helloooo world');
-  })
-
-  .post('/', bodyParser(), (req, res, next) => {
+const userController = {
+  signup(req, res, next) {
     const data = req.body;
 
     return User.find({ email: data.email }).count()
@@ -30,8 +20,8 @@ users
         return res.json({ user });
       })
       .catch(next);
-  })
+  },
 
-  ; // end users routes
+};
 
-module.exports = users;
+module.exports = userController;
