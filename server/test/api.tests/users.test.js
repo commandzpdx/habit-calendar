@@ -71,6 +71,21 @@ describe('user', () => {
       );
     });
 
+    it('signup POSTs with email, password, first name and last name', () => {
+      return request
+        .post('/api/users')
+        .send({ firstName: 'first', lastName: 'last', email: 'email@email.com', password: 'asdfasdf' })
+        .then(
+        (res) => {
+          const response = JSON.parse(res.text);
+
+          assert.equal(res.status, 201);
+          assert.isOk(response.name);
+          assert.isOk(response.token);
+        },
+      );
+    });
+
   });
 
 });
