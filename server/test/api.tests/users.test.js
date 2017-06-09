@@ -95,11 +95,29 @@ describe('user', () => {
         .then(
           (res) => {
             const response = JSON.parse(res.text);
-            console.log('resss is ', response);
+
             assert.equal(res.status, 200);
             assert.equal(response.message, 'The provided token is valid.');
           },
         );
+    });
+
+    it('recognizes a bad token', () => {
+      const badToken = 'badTokenString';
+
+      return request
+        .get('/api/user/token')
+        .set('Authorization', `Bearer ${badToken}`)
+        .then(
+          () => { throw new Error('Status should not be ok'); },
+          (res) => {
+            const response = JSON.parse(res.response.text);
+
+            assert.equal(res.status, 401);
+            assert.equal(response.message, 'Unauthorized');
+          },
+        );
+
     });
 
   });
