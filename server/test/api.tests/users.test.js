@@ -21,14 +21,22 @@ after(() => database.disconnect());
 // after(() => server.close());
 
 describe('user', () => {
+  const badToken = 'badTokenString';
+  const testUser = {
+    firstName: 'joe',
+    lastName: 'tester',
+    email: 'email@email.com',
+    password: 'asdfasdf',
+  };
   let testToken;
+
 
   describe('user management', () => {
 
     it('signup requires not just password', () => {
       return request
         .post('/api/users')
-        .send({ password: 'asdfasdf' })
+        .send({ password: testUser.password })
         .then(
         () => { throw new Error('status should not be ok'); },
         (res) => {
@@ -44,7 +52,7 @@ describe('user', () => {
     it('signup requires not just email', () => {
       return request
         .post('/api/users')
-        .send({ email: 'email@email.com' })
+        .send({ email: testUser.password })
         .then(
         () => { throw new Error('status should not be ok'); },
         (res) => {
@@ -60,7 +68,7 @@ describe('user', () => {
     it('signup requires not just first and last name', () => {
       return request
         .post('/api/users')
-        .send({ firstName: 'first', lastName: 'last' })
+        .send({ firstName: testUser.firstName, lastName: testUser.lastName })
         .then(
         () => { throw new Error('status should not be ok'); },
         (res) => {
@@ -75,7 +83,11 @@ describe('user', () => {
     it('signup POSTs with email, password, first name, and last name, then returns a token', () => {
       return request
         .post('/api/users')
-        .send({ firstName: 'first', lastName: 'last', email: 'email@email.com', password: 'asdfasdf' })
+        .send({ firstName: testUser.firstName,
+          lastName: testUser.lastName,
+          email: testUser.email,
+          password: testUser.password,
+        })
         .then(
         (res) => {
           const response = JSON.parse(res.text);
@@ -103,8 +115,6 @@ describe('user', () => {
     });
 
     it('recognizes a bad token', () => {
-      const badToken = 'badTokenString';
-
       return request
         .get('/api/user/token')
         .set('Authorization', `Bearer ${badToken}`)
@@ -117,7 +127,37 @@ describe('user', () => {
             assert.equal(response.message, 'Unauthorized');
           },
         );
+    });
 
+    it('login is unsuccessful with bad password, email combo', () => {
+      return request
+        .post('/api/user/login')
+        .send({ email: 'badEmail@email.com', password: 'badPassword'})
+        .then(
+          () => { throw new Error('Status should not be ok'); },
+          (res) => {
+            const response = JSON.parse(res.response.text);
+
+            assert.equal(res.status, 400);
+            assert.equal(response.message, 'The provided email and/or password is invalid.');
+          },
+        );
+    });
+
+    it('login is successful with signed up user', () => {
+      return request
+        .post('/api/user/login')
+        .set('content-type', 'application/json')
+        .send({ email: testUser.email, password: testUser.password })
+        .then(
+          (res) => {
+            const response = JSON.parse(res.text);
+
+            assert.equal(res.status, 200);
+            assert.equal(response.name, `${testUser.firstName} ${testUser.lastName}`);
+            assert.isOk(response.token);
+          },
+        );
     });
 
   });
