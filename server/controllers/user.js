@@ -1,8 +1,11 @@
+const jwt = require('../libraries/json-web-token');
+
 const User = require('../models/user');
 
 const userController = {
   signup(req, res, next) {
     const data = req.body;
+    let name;
 
     return User.find({ email: data.email }).count()
       .then((count) => {
@@ -17,7 +20,22 @@ const userController = {
         return new User(data).save();
       })
       .then((user) => {
-        return res.json({ user });
+        name = `${user.firstName} ${user.lastName}`;
+
+        return jwt.sign({
+          _id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        });
+      })
+      .then((token) => {
+        return res
+          .status(201)
+          .json({
+            name,
+            token,
+          });
       })
       .catch(next);
   },
