@@ -7,7 +7,7 @@ const { JWT_SECRET } = process.env;
 const jsonWebToken = {
 
   /**
-   * Create a token.
+   * Create a token
    *
    * @param {Object} payload
    * @return {Promise}
@@ -23,7 +23,7 @@ const jsonWebToken = {
   },
 
   /**
-   * Verify a token.
+   * Verify a token
    *
    * @param {String} token
    * @return {Promise}
