@@ -9,7 +9,7 @@ const ensureAuth = require('../middlewares/ensure-auth');
 const apiRouter = Router();
 
 // User login validation
-apiRouter.post('/user/login', authController.login);
+apiRouter.post('/user/login', bodyParser(), authController.login);
 
 // User token verification
 apiRouter.get('/user/token', ensureAuth(), authController.token);
