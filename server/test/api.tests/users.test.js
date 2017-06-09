@@ -21,6 +21,7 @@ after(() => database.disconnect());
 // after(() => server.close());
 
 describe('user', () => {
+  let testToken;
 
   describe('user management', () => {
 
@@ -71,19 +72,34 @@ describe('user', () => {
       );
     });
 
-    it('signup POSTs with email, password, first name and last name', () => {
+    it('signup POSTs with email, password, first name, and last name, then returns a token', () => {
       return request
         .post('/api/users')
         .send({ firstName: 'first', lastName: 'last', email: 'email@email.com', password: 'asdfasdf' })
         .then(
         (res) => {
           const response = JSON.parse(res.text);
+          testToken = response.token;
 
           assert.equal(res.status, 201);
           assert.isOk(response.name);
           assert.isOk(response.token);
         },
       );
+    });
+
+    it('user sign-in verifies the token', () => {
+      return request
+        .get('/api/user/token')
+        .set('Authorization', `Bearer ${testToken}`)
+        .then(
+          (res) => {
+            const response = JSON.parse(res.text);
+            console.log('resss is ', response);
+            assert.equal(res.status, 200);
+            assert.equal(response.message, 'The provided token is valid.');
+          },
+        );
     });
 
   });
