@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node index.js",
     "start-watch": "nodemon index.js",
-    "pretest": "eslint .",
     "test": "mocha --recursive"
   },
   "dependencies": {

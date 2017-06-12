@@ -1,14 +1,26 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const users = require('../routes/Users');
-const errorHandler = require('../middlewares/handle-errors');
+const api = require('../routes/api');
+const web = require('../routes/web');
 
 const app = express();
+const { NODE_ENV } = process.env;
 
-app.use(morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev'));
-app.use('/api/users', users);
+// Logger
+app.use(morgan(NODE_ENV === 'production' ? 'common' : 'dev'));
 
-app.use(errorHandler());
+// Serve static files
+if (NODE_ENV === 'production') {
+  app.use(express.static('public'));
+}
+
+// API routes
+app.use('/api', api);
+
+// Web routes
+if (NODE_ENV === 'production') {
+  app.use(web);
+}
 
 module.exports = app;
