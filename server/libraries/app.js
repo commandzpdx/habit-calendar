@@ -10,14 +10,16 @@ const { NODE_ENV } = process.env;
 // Logger
 app.use(morgan(NODE_ENV === 'production' ? 'common' : 'dev'));
 
+// Serve static files
+if (NODE_ENV === 'production') {
+  app.use(express.static('public'));
+}
+
 // API routes
 app.use('/api', api);
 
+// Web routes
 if (NODE_ENV === 'production') {
-  // Serve static files
-  app.use(express.static('public'));
-
-  // Web routes
   app.use(web);
 }
 
