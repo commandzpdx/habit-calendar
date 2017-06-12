@@ -52,7 +52,7 @@ export default class SpiralCal extends Component {
           },
           days: [
             {
-              pathD: 'M318.3,131.6c-5.4,0-9.8-4.4-9.8-9.8s4.4-9.8,9.8-9.8s9.8,4.4,9.8,9.8S323.7,131.6,318.3,131.6z',
+              pathD: 'M304.2,113.6c-5.4,0-9.8-4.4-9.8-9.8s4.4-9.8,9.8-9.8c5.4,0,9.8,4.4,9.8,9.8S309.6,113.6,304.2,113.6z',
               textContent: 30,
               textTransform: 'matrix(1 0 0 1 298.5571 107.0385)',
               id: 'dec-30',
@@ -74,11 +74,21 @@ export default class SpiralCal extends Component {
   render() {
     return (
       <svg viewBox="-196 -8 565.5 576" style={{ enableBackground: 'new -196 -8 565.5 576' }}>
-        {this.state.circles.map(c => {
+        {this.state.circles.map(m => {
           return (
-            <g>
-              <path className={c.monthPathClassName} d={c.monthCircle.pathD} />
-              <text transform={c.monthCircle.textTransform} className={c.monthTextClassName} />
+            <g key={m.month}>
+              <g>
+                <path className={m.monthPathClassName} d={m.monthCircle.pathD} />
+                <text transform={m.monthCircle.textTransform} className={m.monthTextClassName}>{m.monthCircle.textContent}</text>
+              </g>
+              {m.days.map(d => {
+                return (
+                  <g key={d.id}>
+                    <path className={m.dayPathClassName} d={d.pathD} />
+                    <text transform={d.textTransform} className={m.dayTextClassName} >{d.textContent}</text>
+                  </g>
+                );
+              })}
             </g>
           );
         })}
