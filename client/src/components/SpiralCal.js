@@ -69,21 +69,30 @@ export default class SpiralCal extends Component {
         },
       ],
     };
+    this.clickDayCircle = this.clickDayCircle.bind(this);
+  }
+
+  clickDayCircle(monthIndex, dayIndex) {
+    let currentState = [...this.state.circles];
+    currentState[monthIndex].days[dayIndex].filled = !currentState[monthIndex].days[dayIndex].filled;
+    this.setState({
+      circles: currentState,
+    });
   }
 
   render() {
     return (
       <svg viewBox="-196 -8 565.5 576" style={{ enableBackground: 'new -196 -8 565.5 576' }}>
-        {this.state.circles.map(m => {
+        {this.state.circles.map((m, mIndex) => {
           return (
             <g key={m.month}>
               <g>
                 <path className={m.monthPathClassName} d={m.monthCircle.pathD} />
                 <text transform={m.monthCircle.textTransform} className={m.monthTextClassName}>{m.monthCircle.textContent}</text>
               </g>
-              {m.days.map(d => {
+              {m.days.map((d, dIndex) => {
                 return (
-                  <g key={d.id}>
+                  <g key={d.id} onClick={() => this.clickDayCircle(mIndex, dIndex)}>
                     <path className={m.dayPathClassName} d={d.pathD} />
                     <text transform={d.textTransform} className={m.dayTextClassName} >{d.textContent}</text>
                   </g>
