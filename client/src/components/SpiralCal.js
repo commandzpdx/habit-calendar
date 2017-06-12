@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import spiralSVG from '../assets/spiral_progress.svg';
 import './SpiralCal.css';
+import classNames from 'classnames';
 
 export default class SpiralCal extends Component {
   constructor(props) {
@@ -93,7 +94,13 @@ export default class SpiralCal extends Component {
               {m.days.map((d, dIndex) => {
                 return (
                   <g key={d.id} onClick={() => this.clickDayCircle(mIndex, dIndex)}>
-                    <path className={m.dayPathClassName} d={d.pathD} />
+                    <path
+                      className={classNames({
+                        [m.dayPathClassName]: true,
+                        filled: d.filled,
+                      })}
+                      d={d.pathD}
+                    />
                     <text transform={d.textTransform} className={m.dayTextClassName} >{d.textContent}</text>
                   </g>
                 );
