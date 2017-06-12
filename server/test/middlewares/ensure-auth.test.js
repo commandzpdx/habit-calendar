@@ -2,7 +2,7 @@ const { assert } = require('chai');
 const jwt = require('../../libraries/json-web-token');
 const ensureAuth = require('../../middlewares/ensure-auth')();
 
-describe.only('Ensure Auth Middleware', () => {
+describe('Ensure Auth Middleware', () => {
 
   const payload = {
     _id: '1a2b3c',

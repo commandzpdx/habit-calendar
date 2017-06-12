@@ -1,18 +1,11 @@
-const bodyParser = require('body-parser').json;
-const express = require('express');
+const jwt = require('../libraries/json-web-token');
 
 const User = require('../models/user');
 
-const Router = express.Router;
-const users = Router();
-
-users
-  .get('/', (req, res) => {
-    res.send('helloooo world');
-  })
-
-  .post('/', bodyParser(), (req, res, next) => {
+const userController = {
+  signup(req, res, next) {
     const data = req.body;
+    let name;
 
     return User.find({ email: data.email }).count()
       .then((count) => {
@@ -27,11 +20,26 @@ users
         return new User(data).save();
       })
       .then((user) => {
-        return res.json({ user });
+        name = `${user.firstName} ${user.lastName}`;
+
+        return jwt.sign({
+          _id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        });
+      })
+      .then((token) => {
+        return res
+          .status(201)
+          .json({
+            name,
+            token,
+          });
       })
       .catch(next);
-  })
+  },
 
-  ; // end users routes
+};
 
-module.exports = users;
+module.exports = userController;
