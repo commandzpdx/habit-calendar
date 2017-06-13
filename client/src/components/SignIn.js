@@ -23,7 +23,7 @@ class SignIn extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    fetch('/api/user/login', {
+    fetch('/api/user/signin', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
