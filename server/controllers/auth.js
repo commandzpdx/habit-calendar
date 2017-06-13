@@ -7,13 +7,13 @@ const User = require('../models/user');
 const authController = {
 
   /**
-   * User login
+   * User signin
    *
    * @param {Object} req
    * @param {Object} res
    * @param {Function} next
    */
-  login(req, res, next) {
+  signin(req, res, next) {
     // Copy the data from req.body
     const payload = Object.assign({}, req.body);
 
