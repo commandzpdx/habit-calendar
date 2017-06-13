@@ -10,6 +10,7 @@ class SignIn extends Component {
 
     this.state = {
       email: '',
+      errorMessage: '',
       password: '',
     };
   }
@@ -36,10 +37,24 @@ class SignIn extends Component {
     })
       .then(res => res.json())
       .then((json) => {
-        this.props.updateState({
-          signedIn: true,
-          token: json.token,
-        });
+        if (json.token) {
+          this.setState({
+            email: '',
+            errorMessage: '',
+            password: '',
+          }, () => {
+            // TODO: redirect to main page after signing in was successful and state was updated
+            this.props.updateState({
+              name: json.name,
+              signedIn: true,
+              token: json.token,
+            });
+          });
+        } else {
+          this.setState({
+            errorMessage: json.message,
+          });
+        }
       });
   }
 
@@ -47,10 +62,14 @@ class SignIn extends Component {
     return (
       <div>
         <h1>Sign in:</h1>
+        {this.state.errorMessage && (
+          <p>{this.state.errorMessage}</p>
+        )}
         <form onSubmit={this.handleSubmit}>
           <input
             type="email"
             name="email"
+            value={this.state.email}
             onChange={this.handleChange}
             autoComplete="off"
             placeholder="email"
@@ -60,6 +79,7 @@ class SignIn extends Component {
           <input
             type="password"
             name="password"
+            value={this.state.password}
             onChange={this.handleChange}
             autoComplete="off"
             placeholder="password"
