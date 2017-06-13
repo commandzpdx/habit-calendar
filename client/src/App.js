@@ -11,13 +11,14 @@ class App extends Component {
     this.updateState = this.updateState.bind(this);
 
     this.state = {
+      name: '',
       signedIn: false,
-      token: null,
+      token: '',
     };
   }
 
-  updateState(newState) {
-    this.setState(newState);
+  updateState(newState, callback = null) {
+    this.setState(newState, callback);
   }
 
   render() {
