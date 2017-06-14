@@ -31,9 +31,8 @@ export default class SignUpForm extends Component {
       // TODO: should the pw really be in here? As in, it seems vulnerable...
     };
 
-    fetch('api/users', {
+    fetch('/api/users', {
       method: 'POST',
-      // mode: 'cors',
       headers: {
         Accept: 'application/json',
         'Content-type': 'application/json',
