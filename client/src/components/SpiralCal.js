@@ -112,31 +112,3 @@ export default class SpiralCal extends Component {
     );
   }
 }
-// <g id="december_circ">
-//   <g>
-//     <path className="st0" d="M304.2,113.6c-5.4,0-9.8-4.4-9.8-9.8s4.4-9.8,9.8-9.8c5.4,0,9.8,4.4,9.8,9.8S309.6,113.6,304.2,113.6z" />
-//     <text transform="matrix(1 0 0 1 298.5571 107.0385)" className="st5 st6">30</text>
-//   </g>
-//   <g onClick={() => { alert('clicked'); } } >
-//     <path className="st0" d="M318.3,131.6c-5.4,0-9.8-4.4-9.8-9.8s4.4-9.8,9.8-9.8s9.8,4.4,9.8,9.8S323.7,131.6,318.3,131.6z" />
-//     <text transform="matrix(1 0 0 1 312.6571 125.0386)" className="st5 st6">31</text>
-//   </g>
-//   <g>
-//     <path className="st1" d="M-173.6,321.6c-5.4,0-9.8-4.4-9.8-9.8s4.4-9.8,9.8-9.8c5.4,0,9.8,4.4,9.8,9.8S-168.2,321.6-173.6,321.6z" />
-//     <text transform="matrix(1 0 0 1 -180.1002 314.3097)" className="st2 st3 st4">dec</text>
-//   </g>
-// </g>
-// <g id="january_circ">
-//   <g>
-//     <path className="st28" d="M8.6,285.9c0,5.4-4.4,9.8-9.8,9.8s-9.8-4.4-9.8-9.8s4.4-9.8,9.8-9.8S8.6,280.5,8.6,285.9z" />
-//     <text transform="matrix(1 0 0 1 -6.5001 288.0145)" className="st2 st3 st4">jan</text>
-//   </g>
-//   <g>
-//     <path className="st27" d="M2.5,253.4c-5.4,0-9.8,4.4-9.8,9.8s4.4,9.8,9.8,9.8s9.8-4.4,9.8-9.8S7.9,253.4,2.5,253.4z" />
-//     <text transform="matrix(1 0 0 1 -0.3213 266.4384)" className="st3 st6">1</text>
-//   </g>
-//   <g>
-//     <path className="st27" d="M10.3,232.1c-5.4,0-9.8,4.4-9.8,9.8c0,5.4,4.4,9.8,9.8,9.8s9.8-4.4,9.8-9.8S15.7,232.1,10.3,232.1z" />
-//     <text transform="matrix(1 0 0 1 7.4785 245.1386)" className="st3 st6">2</text>
-//   </g>
-// </g>
