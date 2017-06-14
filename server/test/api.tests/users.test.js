@@ -129,9 +129,9 @@ describe('user', () => {
         );
     });
 
-    it('login is unsuccessful with bad password, email combo', () => {
+    it('signin is unsuccessful with bad password, email combo', () => {
       return request
-        .post('/api/user/login')
+        .post('/api/user/signin')
         .send({ email: 'badEmail@email.com', password: 'badPassword'})
         .then(
           () => { throw new Error('Status should not be ok'); },
@@ -144,9 +144,9 @@ describe('user', () => {
         );
     });
 
-    it('login is successful with signed up user', () => {
+    it('signin is successful with signed up user', () => {
       return request
-        .post('/api/user/login')
+        .post('/api/user/signin')
         .set('content-type', 'application/json')
         .send({ email: testUser.email, password: testUser.password })
         .then(

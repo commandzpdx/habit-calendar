@@ -10,8 +10,8 @@ const handleNotFound = require('../middlewares/handle-not-found');
 // Express router for API
 const apiRouter = Router();
 
-// User login validation
-apiRouter.post('/user/login', bodyParser(), authController.login);
+// User signin
+apiRouter.post('/user/signin', bodyParser(), authController.signin);
 
 // User token verification
 apiRouter.get('/user/token', ensureAuth(), authController.token);
