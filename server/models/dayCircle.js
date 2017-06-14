@@ -17,9 +17,9 @@ const schema = new Schema({
   },
   month: {
     type: Schema.Types.ObjectId,
-    ref: 'Month'
+    ref: 'MonthCircle'
   },
 }); 
 
-const DayCircle = mongoose.module('DayCircle', schema);
+const DayCircle = mongoose.model('DayCircle', schema);
 module.exports = DayCircle;

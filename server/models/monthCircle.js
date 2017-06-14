@@ -39,5 +39,5 @@ const schema = new Schema({
   },
 });
 
-const MonthCircle = mongoose.module('MonthCircle', schema);
+const MonthCircle = mongoose.model('MonthCircle', schema);
 module.exports = MonthCircle;
