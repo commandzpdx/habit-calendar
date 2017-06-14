@@ -5,12 +5,20 @@ import Main from './components/Main';
 import Footer from './components/Footer';
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
+
+    this.updateState = this.updateState.bind(this);
+
     this.state = {
+      name: '',
       signedIn: false,
-      token: null,
+      token: '',
     };
+  }
+
+  updateState(newState, callback = null) {
+    this.setState(newState, callback);
   }
 
   render() {
@@ -18,7 +26,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Route path="/" component={NavBar} />
-          <Main />
+          <Main updateState={this.updateState} />
           <Route path="/" component={Footer} />
         </div>
       </Router>
