@@ -5,10 +5,10 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
   habit: {
     type: String,
-    required: true,
   },
   category: {
     type: String,
+    required: true,
   },
   startDate: {
     type: Date,
