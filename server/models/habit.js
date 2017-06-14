@@ -29,12 +29,6 @@ const schema = new Schema({
   notificationInterval: {
     type: Number,
   },
-  day: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Day',
-    },
-  ],
 });
 
 const Habit = mongoose.model('Habit', schema);
