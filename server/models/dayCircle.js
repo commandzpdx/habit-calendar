@@ -20,3 +20,6 @@ const schema = new Schema({
     ref: 'Month'
   },
 }); 
+
+const DayCircle = mongoose.module('DayCircle', schema);
+module.exports = DayCircle;
