@@ -11,6 +11,7 @@ export default class SignUpForm extends Component {
       lastName: '',
       email: '',
       password: '',
+      errorMessage: '',
       // TODO: should the pw really be in here? As in, it seems vulnerable...
     };
     this.handleChange = this.handleChange.bind(this);
@@ -42,18 +43,25 @@ export default class SignUpForm extends Component {
     })
       .then(res => res.json())
       .then((res) => {
-        this.setState({
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-        }, () => {
-          this.props.updateState({
-            name: res.name,
-            signedIn: true,
-            token: res.token,
+        if (res.token) {
+          this.setState({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            errorMessage: '',
+          }, () => {
+            this.props.updateState({
+              name: res.name,
+              signedIn: true,
+              token: res.token,
+            });
           });
-        });
+        } else {
+          this.setState({
+            errorMessage: res.message,
+          });
+        }
       });
   }
 
@@ -61,6 +69,9 @@ export default class SignUpForm extends Component {
     return (
       <div>
         <h3>Sign up:</h3>
+        {this.state.errorMessage && (
+          <p>{this.state.errorMessage}</p>
+        )}
         <form onSubmit={this.handleSignUp} autoComplete="off" >
           <input
             name="firstName"
@@ -80,7 +91,7 @@ export default class SignUpForm extends Component {
           /> <br />
           <input
             name="email"
-            type="text"
+            type="email"
             placeholder="email"
             value={this.state.email}
             onChange={this.handleChange}
