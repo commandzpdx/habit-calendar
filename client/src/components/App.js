@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import Main from './components/Main';
-import Footer from './components/Footer';
+import NavBar from './NavBar';
+import Main from './Main';
+import Footer from './Footer';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +18,10 @@ class App extends Component {
   }
 
   updateState(newState, callback = null) {
-    this.setState(newState, callback);
+    this.setState(newState, () => {
+      localStorage.setItem('app', JSON.stringify(this.state));
+      if (callback) callback();
+    });
   }
 
   render() {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // import fetch from '../fetch';
 
@@ -39,10 +40,12 @@ export default class SignUpForm extends Component {
       },
       body: JSON.stringify(payload),
     })
-      .then((res) => {
-        localStorage.setItem('token response', res);
-        return res.json();
-      });
+      .then(res => res.json())
+      .then(res => this.props.updateState({
+        name: res.name,
+        signedIn: true,
+        token: res.token,
+      }));
   }
 
   render() {
@@ -88,3 +91,7 @@ export default class SignUpForm extends Component {
     );
   }
 }
+
+SignUpForm.propTypes = {
+  updateState: PropTypes.func.isRequired,
+};
