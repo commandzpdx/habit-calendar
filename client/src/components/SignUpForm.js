@@ -12,7 +12,6 @@ export default class SignUpForm extends Component {
       email: '',
       password: '',
       errorMessage: '',
-      // TODO: should the pw really be in here? As in, it seems vulnerable...
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -30,7 +29,6 @@ export default class SignUpForm extends Component {
       lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password,
-      // TODO: should the pw really be in here? As in, it seems vulnerable...
     };
 
     fetch('/api/users', {
