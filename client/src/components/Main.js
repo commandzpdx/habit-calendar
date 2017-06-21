@@ -10,7 +10,7 @@ import UserSetUp from './UserSetUp';
 function Main(props) {
   return (
     <main>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" render={rest => <Home {...rest} updateState={props.updateState} />} />
       <Route exact path="/signin" render={rest => <SignIn {...rest} updateState={props.updateState} />} />
       <Route exact path="/firstname" component={UserMain} />
       <Route exact path="/setup" component={UserSetUp} />
