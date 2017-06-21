@@ -41,18 +41,27 @@ export default class SignUpForm extends Component {
       body: JSON.stringify(payload),
     })
       .then(res => res.json())
-      .then(res => this.props.updateState({
-        name: res.name,
-        signedIn: true,
-        token: res.token,
-      }));
+      .then((res) => {
+        this.setState({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+        }, () => {
+          this.props.updateState({
+            name: res.name,
+            signedIn: true,
+            token: res.token,
+          });
+        });
+      });
   }
 
   render() {
     return (
       <div>
         <h3>Sign up:</h3>
-        <form onSubmit={this.handleSignUp}>
+        <form onSubmit={this.handleSignUp} autoComplete="off" >
           <input
             name="firstName"
             type="text"
@@ -85,7 +94,7 @@ export default class SignUpForm extends Component {
             onChange={this.handleChange}
             required
           /> <br />
-          <button>submit</button>
+          <button type="submit" >submit</button>
         </form>
       </div>
     );
