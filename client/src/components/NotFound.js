@@ -1,5 +1,5 @@
 import React from 'react';
-
+// TODO: add styles?
 export default function NotFound() {
   return (
     <div>

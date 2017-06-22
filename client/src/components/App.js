@@ -28,7 +28,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Route path="/" component={NavBar} />
+          <Route path="/" render={rest => <NavBar {...rest} signedIn={this.state.signedIn} updateState={this.updateState} />} />
           <Main updateState={this.updateState} />
           <Route path="/" component={Footer} />
         </div>
