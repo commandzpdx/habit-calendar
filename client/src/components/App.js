@@ -6,15 +6,18 @@ import Footer from './Footer';
 
 class App extends Component {
   constructor(props) {
-    super(props);
-
-    this.updateState = this.updateState.bind(this);
-
-    this.state = {
+    const storageState = localStorage.getItem('app');
+    const defaultState = {
       name: '',
       signedIn: false,
       token: '',
     };
+
+    super(props);
+
+    this.updateState = this.updateState.bind(this);
+
+    this.state = (storageState) ? JSON.parse(storageState) : defaultState;
   }
 
   updateState(newState, callback = null) {
