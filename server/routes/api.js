@@ -4,6 +4,7 @@ const { json: bodyParser } = require('body-parser');
 const authController = require('../controllers/auth');
 const userController = require('../controllers/user');
 const monthCircleController = require('../controllers/monthCircle');
+const dayCircleController = require('../controllers/dayCircle');
 const ensureAuth = require('../middlewares/ensure-auth');
 const handleErrors = require('../middlewares/handle-errors');
 const handleNotFound = require('../middlewares/handle-not-found');
@@ -30,6 +31,20 @@ apiRouter.get('/month-circles/:id', monthCircleController.getMonth);
 apiRouter.delete('/month-circles/:id', monthCircleController.deleteMonth);
 
 apiRouter.put('/month-circles/:id', bodyParser(), monthCircleController.updateMonth);
+
+// DayCircle CRUD
+
+apiRouter.post('/day-circles', bodyParser(), dayCircleController.createDays);
+
+apiRouter.post('/day-circles/day', bodyParser(), dayCircleController.createDay);
+
+apiRouter.get('/day-circles', dayCircleController.getDays);
+
+apiRouter.get('/day-circles/:id', dayCircleController.getDay);
+
+apiRouter.delete('/day-circles/:id', dayCircleController.deleteDay);
+
+apiRouter.put('/day-circles/:id', bodyParser(), dayCircleController.updateDay);
 
 // Handle not found (404) response
 apiRouter.use(handleNotFound());
