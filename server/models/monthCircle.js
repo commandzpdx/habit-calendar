@@ -37,6 +37,10 @@ const schema = new Schema({
       required: true,
     },
   },
+  // dayCircles: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'DayCircle',
+  // }],
 });
 
 const MonthCircle = mongoose.model('MonthCircle', schema);
