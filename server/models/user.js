@@ -21,6 +21,12 @@ const schema = new Schema({
     required: true,
     set(password) { return bcrypt.hashSync(password, 8); },
   },
+  habits: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Habit',
+    },
+  ],
 });
 
 schema.methods.comparePassword = function comparePassword(password) {
