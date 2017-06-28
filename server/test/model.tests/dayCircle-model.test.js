@@ -46,4 +46,5 @@ describe('dayCircle model', () => {
       err => assert.isNotNull(err),
     );
   });
+
 });
