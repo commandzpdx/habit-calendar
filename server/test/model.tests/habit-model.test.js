@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 
 const Habit = require('../../models/habit');
 
-describe.only('habit model', () => {
+describe('habit model', () => {
   it('example with all required fields', () => {
     return new Habit({
       category: 'asdf',
