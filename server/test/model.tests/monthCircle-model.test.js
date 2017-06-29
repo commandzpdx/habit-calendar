@@ -16,8 +16,24 @@ describe.only('monthCircle model', () => {
         textTransform: 'e',
       },
     }).validate();
+  });
 
-
+  it('requires month (invalid without month)', () => {
+    return new MonthCircle({
+      monthPathClassName: 'a',
+      monthTextClassName: 's',
+      dayPathClassName: 'd',
+      dayTextClassName: 'f',
+      monthCircle: {
+        pathD: 'q',
+        textContent: 'w',
+        textTransform: 'e',
+      },
+    }).validate()
+    .then(
+      () => { throw new Error('validation should not pass'); },
+      err => assert.isNotNull(err),
+    );
   });
 
 });
