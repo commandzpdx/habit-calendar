@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 
 const MonthCircle = require('../../models/monthCircle');
 
-describe.only('monthCircle model', () => {
+describe('monthCircle model', () => {
   it('example with all required fields', () => {
     return new MonthCircle({
       month: 'January',
