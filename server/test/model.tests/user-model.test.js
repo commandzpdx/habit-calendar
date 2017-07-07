@@ -12,4 +12,16 @@ describe.only('user model', () =>{
     }).validate();
   });
 
+  it('requires firstName', () => {
+    return new User({
+      lastName: 's',
+      email: 'd@email.com',
+      password: 'f',
+    }).validate()
+    .then(
+      () => { throw new Error('validation should not pass'); },
+      err => assert.isNotNull(err),
+    );
+  });
+
 });
