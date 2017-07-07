@@ -24,4 +24,16 @@ describe.only('user model', () =>{
     );
   });
 
+  it('requires lastName', () => {
+    return new User({
+      firstName: 'a',
+      email: 'd@email.com',
+      password: 'f',
+    }).validate()
+    .then(
+      () => { throw new Error('validation should not pass'); },
+      err => assert.isNotNull(err),
+    );
+  });
+
 });
