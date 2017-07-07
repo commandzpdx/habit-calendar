@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 
 const User = require('../../models/user');
 
-describe.only('user model', () =>{
+describe('user model', () =>{
   it('example with all required fields', () => {
     return new User({
       firstName: 'a',
@@ -46,6 +46,19 @@ describe.only('user model', () =>{
       () => { throw new Error('validation should not pass'); },
       err => assert.isNotNull(err),
     );
+  });
+
+  it('sets hash from password and correctly compares it', () => {
+    const data = {
+      username: 'username',
+      password: 'password',
+    };
+
+    const user = new User(data);
+
+    assert.notEqual(user.password, data.password);
+    assert.isTrue(user.comparePassword('password'));
+    assert.isFalse(user.comparePassword('notpassword'));
   });
 
 });
