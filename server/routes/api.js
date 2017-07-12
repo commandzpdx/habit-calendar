@@ -5,6 +5,7 @@ const authController = require('../controllers/auth');
 const userController = require('../controllers/user');
 const monthCircleController = require('../controllers/monthCircle');
 const dayCircleController = require('../controllers/dayCircle');
+const circlesController = require('../controllers/circle');
 const ensureAuth = require('../middlewares/ensure-auth');
 const handleErrors = require('../middlewares/handle-errors');
 const handleNotFound = require('../middlewares/handle-not-found');
@@ -45,6 +46,10 @@ apiRouter.get('/day-circles/:id', dayCircleController.getDay);
 apiRouter.delete('/day-circles/:id', dayCircleController.deleteDay);
 
 apiRouter.put('/day-circles/:id', bodyParser(), dayCircleController.updateDay);
+
+// Circles
+
+apiRouter.get('/circles', circlesController.getCircles);
 
 // Handle not found (404) response
 apiRouter.use(handleNotFound());
