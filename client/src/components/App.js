@@ -20,6 +20,28 @@ class App extends Component {
     this.state = (storageState) ? JSON.parse(storageState) : defaultState;
   }
 
+  // validates the token everytime you come to the page
+  componentWillMount() {
+    if (this.state.token) {
+      fetch('/api/user/token', { Headers: { Authorization: `Bearer ${this.state.token}` } })
+        .then(
+        (res) => {
+          if (res.status === 401) {
+            this.updateState({ name: '', signedIn: false, token: '' });
+          }
+          return res.json();
+        },
+      )
+        .then(
+        (json) => {
+          if (json.token) {
+            this.updateState({ name: json.name, signedIn: true, token: json.token });
+          }
+        },
+      );
+    }
+  }
+
   updateState(newState, callback = null) {
     this.setState(newState, () => {
       localStorage.setItem('app', JSON.stringify(this.state));
