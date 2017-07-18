@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
   pathD: {
     type: String,
+    trim: true,
     required: true,
   },
   textContent: {
@@ -13,6 +14,7 @@ const schema = new Schema({
   },
   textTransform: {
     type: String,
+    trim: true,
     required: true,
   },
   month: {
