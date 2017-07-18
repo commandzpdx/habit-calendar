@@ -5,9 +5,11 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
   habit: {
     type: String,
+    trim: true,
   },
   category: {
     type: String,
+    trim: true,
     required: true,
   },
   startDate: {
@@ -22,6 +24,7 @@ const schema = new Schema({
   },
   color: {
     type: String,
+    trim: true,
   },
   notifications: {
     type: Boolean,

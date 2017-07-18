@@ -13,6 +13,7 @@ const schema = new Schema({
   },
   weekday: {
     type: String,
+    trim: true,
   },
   dayCircle: {
     type: Schema.Types.ObjectId,
