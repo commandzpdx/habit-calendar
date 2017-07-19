@@ -1,6 +1,6 @@
-const http = require('http');
+const path = require('path');
 
-const createPath = filePath => http.resolve(__dirname, '..', filePath);
+const createPath = filePath => path.resolve(__dirname, '..', filePath);
 
 const paths = {
   indexHtml: createPath('server/public/index.html'),
