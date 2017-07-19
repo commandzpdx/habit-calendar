@@ -52,6 +52,8 @@ apiRouter.put('/day-circles/:id', bodyParser.json(), dayCircleController.updateD
 
 apiRouter.post('/habits', ensureAuth(), bodyParser.json(), habitController.postHabit);
 
+apiRouter.get('/habits/:id', ensureAuth(), habitController.getHabit);
+
 // Circles
 
 apiRouter.get('/circles', circleController.getCircles);
