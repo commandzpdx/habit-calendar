@@ -14,7 +14,7 @@ const habitController = {
         User.findByIdAndUpdate(req.user._id, { $push: { habits: habit._id } }),
       ]);
     })
-    .then(userData => res.json(userData[0]))
+    .then(([habit]) => res.json(habit))
     .catch(next);
   },
 
@@ -27,6 +27,12 @@ const habitController = {
   getAllHabits(req, res, next) {
     return Habit.find()
     .then(habits => res.json(habits))
+    .catch(next);
+  },
+
+  updateHabit(req, res, next) {
+    return Habit.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then(updatedHabit => res.json(updatedHabit))
     .catch(next);
   },
 

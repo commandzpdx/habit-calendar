@@ -56,6 +56,8 @@ apiRouter.get('/habits/:id', ensureAuth(), habitController.getHabit);
 
 apiRouter.get('/habits', ensureAuth(), habitController.getAllHabits);
 
+apiRouter.put('/habits/:id', bodyParser.json(), habitController.updateHabit);
+
 // Circles
 
 apiRouter.get('/circles', circleController.getCircles);
