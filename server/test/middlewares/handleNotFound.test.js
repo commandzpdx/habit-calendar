@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 
-const handleNotFound = require('../../middlewares/handle-not-found')();
+const handleNotFound = require('../../middlewares/handleNotFound')();
 
 describe('Handle Not Found Middleware', () => {
 

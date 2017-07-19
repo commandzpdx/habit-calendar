@@ -2,7 +2,7 @@ const chai = require('chai');
 
 const assert = chai.assert;
 
-const errorHandler = require('../../middlewares/handle-errors');
+const errorHandler = require('../../middlewares/handleErrors');
 const User = require('../../models/user');
 
 describe('handle-errors', () => {

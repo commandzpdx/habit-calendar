@@ -6,9 +6,9 @@ const userController = require('../controllers/user');
 const monthCircleController = require('../controllers/monthCircle');
 const dayCircleController = require('../controllers/dayCircle');
 const circlesController = require('../controllers/circle');
-const ensureAuth = require('../middlewares/ensure-auth');
-const handleErrors = require('../middlewares/handle-errors');
-const handleNotFound = require('../middlewares/handle-not-found');
+const ensureAuth = require('../middlewares/ensureAuth');
+const handleErrors = require('../middlewares/handleErrors');
+const handleNotFound = require('../middlewares/handleNotFound');
 
 // Express router for API
 const apiRouter = Router();
