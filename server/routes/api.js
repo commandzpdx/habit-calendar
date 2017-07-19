@@ -5,7 +5,7 @@ const authController = require('../controllers/auth');
 const userController = require('../controllers/user');
 const monthCircleController = require('../controllers/monthCircle');
 const dayCircleController = require('../controllers/dayCircle');
-const circlesController = require('../controllers/circle');
+const circleController = require('../controllers/circle');
 const ensureAuth = require('../middlewares/ensureAuth');
 const handleErrors = require('../middlewares/handleErrors');
 const handleNotFound = require('../middlewares/handleNotFound');
@@ -49,7 +49,7 @@ apiRouter.put('/day-circles/:id', bodyParser.json(), dayCircleController.updateD
 
 // Circles
 
-apiRouter.get('/circles', circlesController.getCircles);
+apiRouter.get('/circles', circleController.getCircles);
 
 // Handle not found (404) response
 apiRouter.use(handleNotFound());
