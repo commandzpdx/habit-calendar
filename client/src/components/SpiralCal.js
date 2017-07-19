@@ -31,7 +31,7 @@ export default class SpiralCal extends Component {
       <svg viewBox="-196 -8 565.5 576" style={{ enableBackground: 'new -196 -8 565.5 576' }}>
         {this.state.circles.map((m, mIndex) => {
           return (
-            <g key={m.month}>
+            <g key={m._id}>
               <g>
                 <path className={m.monthPathClassName} d={m.monthCircle.pathD} />
                 <text transform={m.monthCircle.textTransform} className={m.monthTextClassName}>{m.monthCircle.textContent}</text>
