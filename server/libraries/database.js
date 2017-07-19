@@ -1,3 +1,4 @@
+const { MONGODB_URI } = process.env;
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -14,4 +15,13 @@ mongoose.connection.on('disconnected', () => {
   console.log('Disconnected from MongoDB');
 });
 
-module.exports = mongoose;
+const database = {
+  connect(uri = MONGODB_URI) {
+    return mongoose.connect(uri);
+  },
+  disconnect() {
+    return mongoose.connection.close();
+  },
+};
+
+module.exports = database;
