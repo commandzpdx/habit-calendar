@@ -1,4 +1,5 @@
 const { assert } = require('chai');
+
 const jwt = require('../../libraries/jsonWebToken');
 
 const payload = {

@@ -3,7 +3,9 @@
  *
  * @return {Function}
  */
-const handleNotFound = () => (req, res, next) => {  // eslint-disable-line
+
+// eslint-disable-next-line no-unused-vars
+const handleNotFound = () => (req, res, next) => {
   return res
     .status(404)
     .json({

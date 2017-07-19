@@ -1,5 +1,6 @@
-const { MONGODB_URI } = process.env;
 const mongoose = require('mongoose');
+
+const { MONGODB_URI } = require('../config/constants');
 
 mongoose.Promise = global.Promise;
 

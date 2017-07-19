@@ -1,8 +1,8 @@
-const { NODE_ENV } = process.env;
-
 const express = require('express');
 const morgan = require('morgan');
 
+const { NODE_ENV } = require('../config/constants');
+const { publicDir } = require('../config/paths');
 const apiRoutes = require('../routes/api');
 const webRoutes = require('../routes/web');
 
@@ -13,7 +13,7 @@ const app = express();
 app.use(morgan(NODE_ENV === 'production' ? 'common' : 'dev'));
 
 // Serve static files.
-if (NODE_ENV === 'production') app.use(express.static('public'));
+if (NODE_ENV === 'production') app.use(express.static(publicDir));
 
 // API routes.
 app.use('/api', apiRoutes);
