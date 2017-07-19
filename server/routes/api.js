@@ -6,6 +6,7 @@ const userController = require('../controllers/user');
 const monthCircleController = require('../controllers/monthCircle');
 const dayCircleController = require('../controllers/dayCircle');
 const circleController = require('../controllers/circle');
+const habitController = require('../controllers/habit');
 const ensureAuth = require('../middlewares/ensureAuth');
 const handleErrors = require('../middlewares/handleErrors');
 const handleNotFound = require('../middlewares/handleNotFound');
@@ -46,6 +47,10 @@ apiRouter.get('/day-circles/:id', dayCircleController.getDay);
 apiRouter.delete('/day-circles/:id', dayCircleController.deleteDay);
 
 apiRouter.put('/day-circles/:id', bodyParser.json(), dayCircleController.updateDay);
+
+// Habit CRUD
+
+apiRouter.post('/habits', ensureAuth(), bodyParser.json(), habitController.postHabit);
 
 // Circles
 
