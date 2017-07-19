@@ -1,6 +1,8 @@
-const mongoose = require('../libraries/mongoose');
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
+
+const { Schema } = mongoose;
 
 const schema = new Schema({
   pathD: {
@@ -26,4 +28,5 @@ const schema = new Schema({
 });
 
 const DayCircle = mongoose.model('DayCircle', schema);
+
 module.exports = DayCircle;
