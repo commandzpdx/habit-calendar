@@ -45,13 +45,15 @@ const schema = new Schema({
       required: true,
     },
   },
+}, {
+  collection: 'monthCircles',
 });
 
 schema.statics.findMonthCircles = function findMonthCircles() {
   return this.aggregate([
     {
       $lookup: {
-        from: 'daycircles',
+        from: 'dayCircles',
         localField: '_id',
         foreignField: 'month',
         as: 'dayCircles',

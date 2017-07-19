@@ -21,6 +21,8 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'MonthCircle',
   },
+}, {
+  collection: 'dayCircles',
 });
 
 const DayCircle = mongoose.model('DayCircle', schema);

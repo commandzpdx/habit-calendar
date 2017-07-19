@@ -32,6 +32,8 @@ const schema = new Schema({
       ref: 'Habit',
     },
   ],
+}, {
+  collection: 'users',
 });
 
 schema.methods.comparePassword = function comparePassword(password) {
