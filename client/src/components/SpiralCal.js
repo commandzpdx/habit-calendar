@@ -20,7 +20,7 @@ export default class SpiralCal extends Component {
 
   clickDayCircle(monthIndex, dayIndex) {
     let currentState = [...this.state.circles];
-    currentState[monthIndex].days[dayIndex].filled = !currentState[monthIndex].days[dayIndex].filled;
+    currentState[monthIndex].dayCircles[dayIndex].filled = !currentState[monthIndex].dayCircles[dayIndex].filled;
     this.setState({
       circles: currentState,
     });
