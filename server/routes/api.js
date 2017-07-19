@@ -7,9 +7,8 @@ const monthCircleController = require('../controllers/monthCircle');
 const dayCircleController = require('../controllers/dayCircle');
 const circleController = require('../controllers/circle');
 const habitController = require('../controllers/habit');
-const ensureAuth = require('../middlewares/ensureAuth');
-const handleErrors = require('../middlewares/handleErrors');
-const handleNotFound = require('../middlewares/handleNotFound');
+const errorController = require('../controllers/error');
+const { ensureAuth } = require('../middlewares/auth');
 
 // Express router for API
 const apiRouter = Router();
@@ -64,10 +63,10 @@ apiRouter.delete('/habits/:id', ensureAuth(), habitController.deleteHabit);
 
 apiRouter.get('/circles', circleController.getCircles);
 
-// Handle not found (404) response
-apiRouter.use(handleNotFound());
-
-// Handle error response
-apiRouter.use(handleErrors());
+// Errors
+apiRouter.use(errorController.notFound);
+apiRouter.use(errorController.errorByName);
+apiRouter.use(errorController.errorByCode);
+apiRouter.use(errorController.internalServer);
 
 module.exports = apiRouter;
