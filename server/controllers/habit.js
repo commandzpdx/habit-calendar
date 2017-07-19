@@ -24,6 +24,12 @@ const habitController = {
     .catch(next);
   },
 
+  getAllHabits(req, res, next) {
+    return Habit.find()
+    .then(habits => res.json(habits))
+    .catch(next);
+  },
+
 };
 
 module.exports = habitController;
