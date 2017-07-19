@@ -1,18 +1,21 @@
+const { PORT } = process.env;
 const http = require('http');
-
 const app = require('./app');
 
-const server = http.createServer(app);
+const httpServer = http.createServer(app);
 
-let port;
-
-server.on('listening', () => {
-  port = server.address().port;
-  console.log(`server is running at port ${port}`);
+httpServer.on('listening', () => {
+  console.log(`server is running at port ${PORT}`);
 });
 
-server.on('close', () => {
-  console.log(`server stopped running at port ${port}`);
+httpServer.on('close', () => {
+  console.log(`server stopped running at port ${PORT}`);
 });
+
+const server = {
+  start(port = PORT) {
+    return httpServer.listen(port);
+  },
+};
 
 module.exports = server;
