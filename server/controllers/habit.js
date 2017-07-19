@@ -36,6 +36,12 @@ const habitController = {
     .catch(next);
   },
 
+  deleteHabit(req, res, next) {
+    return Habit.findByIdAndRemove(req.params.id)
+    .then(() => res.json({ message: 'the habit was deleted' }))
+    .catch(next);
+  },
+
 };
 
 module.exports = habitController;
