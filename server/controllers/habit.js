@@ -8,12 +8,19 @@ const habitController = {
 
     return new Habit(data).save()
     .then((habit) => {
+      // Push the newly saved habit to the user's habit array
       return Promise.all([
         habit,
         User.findByIdAndUpdate(req.user._id, { $push: { habits: habit._id } }),
       ]);
     })
     .then(userData => res.json(userData[0]))
+    .catch(next);
+  },
+
+  getHabit(req, res, next) {
+    return Habit.findById(req.params.id)
+    .then(habit => res.json(habit))
     .catch(next);
   },
 
