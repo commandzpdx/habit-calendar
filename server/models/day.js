@@ -1,6 +1,8 @@
-const mongoose = require('../libraries/mongoose');
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
+
+const { Schema } = mongoose;
 
 const schema = new Schema({
   circleFilled: {
@@ -13,6 +15,7 @@ const schema = new Schema({
   },
   weekday: {
     type: String,
+    trim: true,
   },
   dayCircle: {
     type: Schema.Types.ObjectId,
@@ -22,7 +25,10 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Habit',
   },
+}, {
+  collection: 'days',
 });
 
 const Day = mongoose.model('Day', schema);
+
 module.exports = Day;

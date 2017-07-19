@@ -1,4 +1,5 @@
-const handleErrors = () => (err, req, res, next) => { // eslint-disable-line
+// eslint-disable-next-line no-unused-vars
+const handleErrors = () => (err, req, res, next) => {
   let code;
   let body;
 

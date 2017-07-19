@@ -1,23 +1,30 @@
 const bcrypt = require('bcryptjs');
-const mongoose = require('../libraries/mongoose');
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
+
+const { Schema } = mongoose;
 
 const schema = new Schema({
   firstName: {
     type: String,
+    trim: true,
     required: true,
   },
   lastName: {
     type: String,
+    trim: true,
     required: true,
   },
   email: {
     type: String,
+    lowercase: true,
+    trim: true,
     required: true,
   },
   password: {
     type: String,
+    trim: true,
     required: true,
     set(password) { return bcrypt.hashSync(password, 8); },
   },
@@ -27,6 +34,8 @@ const schema = new Schema({
       ref: 'Habit',
     },
   ],
+}, {
+  collection: 'users',
 });
 
 schema.methods.comparePassword = function comparePassword(password) {
@@ -34,4 +43,5 @@ schema.methods.comparePassword = function comparePassword(password) {
 };
 
 const User = mongoose.model('User', schema);
+
 module.exports = User;

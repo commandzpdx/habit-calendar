@@ -1,26 +1,24 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const api = require('../routes/api');
-const web = require('../routes/web');
+const { NODE_ENV } = require('../config/constants');
+const { publicDir } = require('../config/paths');
+const apiRoutes = require('../routes/api');
+const webRoutes = require('../routes/web');
 
+// Create express app.
 const app = express();
-const { NODE_ENV } = process.env;
 
-// Logger
+// Logger for HTTP requests.
 app.use(morgan(NODE_ENV === 'production' ? 'common' : 'dev'));
 
-// Serve static files
-if (NODE_ENV === 'production') {
-  app.use(express.static('public'));
-}
+// Serve static files.
+if (NODE_ENV === 'production') app.use(express.static(publicDir));
 
-// API routes
-app.use('/api', api);
+// API routes.
+app.use('/api', apiRoutes);
 
-// Web routes
-if (NODE_ENV === 'production') {
-  app.use(web);
-}
+// Web page routes.
+if (NODE_ENV === 'production') app.use('/', webRoutes);
 
 module.exports = app;
