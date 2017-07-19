@@ -1,6 +1,8 @@
-const mongoose = require('../libraries/mongoose');
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
+
+const { Schema } = mongoose;
 
 const schema = new Schema({
   circleFilled: {
@@ -28,4 +30,5 @@ const schema = new Schema({
 });
 
 const Day = mongoose.model('Day', schema);
+
 module.exports = Day;
