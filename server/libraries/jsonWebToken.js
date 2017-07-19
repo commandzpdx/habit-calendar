@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-// Get secret key from env variable
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = require('../config/constants');
 
 // JSON Web Token Library
 const jsonWebToken = {

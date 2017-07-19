@@ -1,6 +1,7 @@
 const { assert } = require('chai');
-const jwt = require('../../libraries/json-web-token');
-const ensureAuth = require('../../middlewares/ensure-auth')();
+
+const jwt = require('../../libraries/jsonWebToken');
+const ensureAuth = require('../../middlewares/ensureAuth')();
 
 describe('Ensure Auth Middleware', () => {
 
