@@ -1,8 +1,8 @@
-const path = require('path');
+const { indexHtml } = require('../config/paths');
 
 const staticController = {
   index(req, res) {
-    return res.sendFile(path.resolve(__dirname, '../public/index.html'));
+    return res.sendFile(indexHtml);
   },
 };
 

@@ -1,6 +1,4 @@
-const chai = require('chai');
-
-const assert = chai.assert;
+const { assert } = require('chai');
 
 const errorHandler = require('../../middlewares/handleErrors');
 const User = require('../../models/user');
