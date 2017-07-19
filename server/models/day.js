@@ -23,6 +23,8 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Habit',
   },
+}, {
+  collection: 'days',
 });
 
 const Day = mongoose.model('Day', schema);

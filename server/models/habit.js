@@ -32,6 +32,8 @@ const schema = new Schema({
   notificationInterval: {
     type: Number,
   },
+}, {
+  collection: 'habits',
 });
 
 const Habit = mongoose.model('Habit', schema);
