@@ -1,7 +1,7 @@
 const server = require('./libraries/server');
 const database = require('./libraries/database');
 
-database.connect(process.env.MONGODB_URI)
+database.connect()
   .then(() => {
     server.listen(process.env.PORT);
   });
