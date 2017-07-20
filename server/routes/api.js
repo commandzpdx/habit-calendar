@@ -56,8 +56,9 @@ apiRouter.get('/habits/:id', ensureAuth(), habitController.getHabit);
 
 apiRouter.get('/habits', ensureAuth(), habitController.getAllHabits);
 
+/** TODO: these PUT and DELETE methods need limitations **/
+/** currently any logged in user can delete or edit all habits **/
 apiRouter.put('/habits/:id', ensureAuth(), bodyParser.json(), habitController.updateHabit);
-
 apiRouter.delete('/habits/:id', ensureAuth(), habitController.deleteHabit);
 
 // Circles
