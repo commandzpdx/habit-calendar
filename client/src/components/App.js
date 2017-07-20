@@ -11,6 +11,8 @@ class App extends Component {
       name: '',
       signedIn: false,
       token: '',
+      habitCategory: '',
+      habit: '',
     };
 
     super(props);
