@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class UserSetUp extends Component {
   constructor(props) {
@@ -8,6 +9,13 @@ class UserSetUp extends Component {
       habitCategory: '',
       habit: '',
     };
+
+    this.handleSelection = this.handleSelection.bind(this);
+  }
+
+  handleSelection(e) {
+    this.setState({ habitCategory: e.target.value });
+    this.props.updateState({ habitCategory: e.target.value });
   }
 
   render() {
@@ -15,11 +23,11 @@ class UserSetUp extends Component {
       <div>
         <h1>SetUp</h1>
         <form>
-          <select id="habit">
-            <option value={0}>Exercise</option>
-            <option value={1}>Diet</option>
-            <option value={2}>Habit</option>
-            <option value={3}>Chore</option>
+          <select id="habit" onChange={this.handleSelection}>
+            <option value="Exercise">Exercise</option>
+            <option value="Diet">Diet</option>
+            <option value="Habit">Habit</option>
+            <option value="Chore">Chore</option>
           </select>
           <br />
           <input type="text" placeholder="habit" />
@@ -32,7 +40,7 @@ class UserSetUp extends Component {
 }
 
 UserSetUp.propTypes = {
-
+  updateState: PropTypes.func.isRequired,
 };
 
 export default UserSetUp;

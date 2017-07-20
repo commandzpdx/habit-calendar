@@ -15,7 +15,7 @@ function Main(props) {
         <Route exact path="/" render={rest => <Home {...rest} updateState={props.updateState} />} />
         <Route exact path="/signin" render={rest => <SignIn {...rest} updateState={props.updateState} />} />
         <Route exact path="/firstname" component={UserMain} />
-        <Route exact path="/setup" component={UserSetUp} />
+        <Route exact path="/setup" render={rest => <UserSetUp {...rest} updateState={props.updateState} />} />
         {/* default case when the route does not exist */}
         <Route component={NotFound} />
       </Switch>
