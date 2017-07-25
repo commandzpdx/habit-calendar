@@ -18,9 +18,9 @@ function Main(props) {
         <Route
           exact
           path="/firstname"
-          component={() => (
+          render={rest => (
             props.signedIn
-              ? <UserMain />
+              ? <UserMain {...rest} name={props.name} habitCategory={props.habitCategory} habit={props.habit} />
               : <Redirect to="/" />)}
         />
         <Route
@@ -39,6 +39,9 @@ function Main(props) {
 }
 
 Main.propTypes = {
+  name: PropTypes.string.isRequired,
+  habitCategory: PropTypes.string.isRequired,
+  habit: PropTypes.string.isRequired,
   updateState: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   signedIn: PropTypes.bool.isRequired,
