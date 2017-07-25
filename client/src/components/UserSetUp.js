@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class UserSetUp extends Component {
@@ -9,6 +10,8 @@ class UserSetUp extends Component {
       habitCategory: '',
       habit: '',
       habitID: '',
+      error: false,
+      redirect: false,
     };
 
     this.handleSelection = this.handleSelection.bind(this);
@@ -18,16 +21,19 @@ class UserSetUp extends Component {
 
   handleSelection(e) {
     this.setState({ habitCategory: e.target.value });
-    // this.props.updateState({ habitCategory: e.target.value });
   }
 
   handleInput(e) {
     this.setState({ habit: e.target.value });
-    // this.props.updateState({ habit: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
+
+    if (!this.state.habitCategory) {
+      this.setState({ error: true });
+      return;
+    }
 
     fetch('/api/habits', {
       method: 'POST',
@@ -41,24 +47,28 @@ class UserSetUp extends Component {
         habit: this.state.habit,
       }),
     })
-    .then(res => res.json())
-    .then((json) => {
-      this.props.updateState({
-        habit: json.habit,
-        habitCategory: json.category,
-        habitID: json._id,
-      }, () => this.props.history.push('/firstname'));
-    });
+      .then(res => res.json())
+      .then((json) => {
+        this.props.updateState({
+          habit: json.habit,
+          habitCategory: json.category,
+          habitID: json._id,
+        }, () => this.setState({ redirect: true }));
+      });
   }
 
   render() {
+    // Use this logic to redirect the user after the submit, instead of the history.push method
+    if (this.state.redirect) {
+      return <Redirect to="/firstname" />;
+    }
     return (
       <div>
         <h1>SetUp</h1>
         <form onSubmit={this.handleSubmit}>
           <select id="habit" onChange={this.handleSelection}>
             {/* TODO: make a default unselectable option  */}
-            <option disabled selected>Select habit category</option>
+            <option value="" disabled selected>Select habit category</option>
             <option value="Exercise">Exercise</option>
             <option value="Diet">Diet</option>
             <option value="Habit">Habit</option>
@@ -72,6 +82,9 @@ class UserSetUp extends Component {
             onChange={this.handleInput}
           />
           <br />
+          {this.state.error && (
+            <p>Please select a habit category</p>
+          )}
           <button type="submit">submit</button>
         </form>
       </div>
@@ -81,7 +94,7 @@ class UserSetUp extends Component {
 
 UserSetUp.propTypes = {
   updateState: PropTypes.func.isRequired,
-  // history: PropTypes.obj.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default UserSetUp;
