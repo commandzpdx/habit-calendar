@@ -8,6 +8,7 @@ class UserSetUp extends Component {
     this.state = {
       habitCategory: '',
       habit: '',
+      habitID: '',
     };
 
     this.handleSelection = this.handleSelection.bind(this);
@@ -45,6 +46,7 @@ class UserSetUp extends Component {
       this.props.updateState({
         habit: json.habit,
         habitCategory: json.category,
+        habitID: json._id,
       }, () => this.props.history.push('/firstname'));
     });
   }
@@ -56,10 +58,12 @@ class UserSetUp extends Component {
         <form onSubmit={this.handleSubmit}>
           <select id="habit" onChange={this.handleSelection}>
             {/* TODO: make a default unselectable option  */}
+            <option disabled selected>Select habit category</option>
             <option value="Exercise">Exercise</option>
             <option value="Diet">Diet</option>
             <option value="Habit">Habit</option>
             <option value="Chore">Chore</option>
+            <option value="Other">Other</option>
           </select>
           <br />
           <input

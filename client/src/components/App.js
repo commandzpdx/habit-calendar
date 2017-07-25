@@ -13,6 +13,7 @@ class App extends Component {
       token: '',
       habitCategory: '',
       habit: '',
+      habitID: '',
     };
 
     super(props);
