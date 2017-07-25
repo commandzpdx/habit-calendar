@@ -54,7 +54,7 @@ apiRouter.get('/circles', circleController.getCircles);
 
 // Days
 
-apiRouter.post('/days', dayController.saveFillDay);
+apiRouter.post('/days', bodyParser.json(), dayController.saveFillDay);
 
 // Handle not found (404) response
 apiRouter.use(handleNotFound());
