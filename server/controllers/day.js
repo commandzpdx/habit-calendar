@@ -10,6 +10,14 @@ const dayController = {
       })
       .catch(next);
   },
+
+  updateFillDay(req, res, next) {
+    return Day.findByIdAndUpdate(req.body.id, { circleFilled: req.body.filled }, { new: true })
+      .then((circle) => {
+        return res.json(circle);
+      })
+      .catch(next);
+  },
 };
 
 module.exports = dayController;
