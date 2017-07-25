@@ -68,11 +68,10 @@ class UserSetUp extends Component {
         <form onSubmit={this.handleSubmit}>
           <select id="habit" onChange={this.handleSelection}>
             <option value="" disabled selected>Select habit category</option>
-            <option value="Exercise">Exercise</option>
-            <option value="Diet">Diet</option>
-            <option value="Habit">Habit</option>
-            <option value="Chore">Chore</option>
-            <option value="Other">Other</option>
+            <option value="exercise">Exercise</option>
+            <option value="diet">Diet</option>
+            <option value="habit">Habit</option>
+            <option value="chore">Chore</option>
           </select>
           <br />
           <input
