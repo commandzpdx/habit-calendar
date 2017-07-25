@@ -67,7 +67,6 @@ class UserSetUp extends Component {
         <h1>SetUp</h1>
         <form onSubmit={this.handleSubmit}>
           <select id="habit" onChange={this.handleSelection}>
-            {/* TODO: make a default unselectable option  */}
             <option value="" disabled selected>Select habit category</option>
             <option value="Exercise">Exercise</option>
             <option value="Diet">Diet</option>
