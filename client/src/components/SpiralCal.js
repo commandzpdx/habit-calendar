@@ -11,6 +11,7 @@ export default class SpiralCal extends Component {
     };
     this.clickDayCircle = this.clickDayCircle.bind(this);
     this.saveClick = this.saveClick.bind(this);
+    this.updateFill = this.updateFill.bind(this);
   }
 
   componentDidMount() {
@@ -29,13 +30,23 @@ export default class SpiralCal extends Component {
     const weekday = weekdays[date.getDay()];
 
     currentState[monthIndex].dayCircles[dayIndex].filled = !currentState[monthIndex].dayCircles[dayIndex].filled;
-    console.log(currentState[monthIndex].dayCircles[dayIndex].filled, year, weekday, currentState[monthIndex].dayCircles[dayIndex], 'exercise');
-    this.saveClick(currentState[monthIndex].dayCircles[dayIndex].filled, year, weekday, currentState[monthIndex].dayCircles[dayIndex]._id)
-    .then(() => {
-      this.setState({
-        circles: currentState,
-      });
-    });
+    if (currentState[monthIndex].dayCircles[dayIndex].id) {  
+      this.updateFill(currentState[monthIndex].dayCircles[dayIndex].id, currentState[monthIndex].dayCircles[dayIndex].filled)
+        .then(() => {
+          this.setState({
+            circles: currentState,
+          });
+        });
+    } else {
+      this.saveClick(currentState[monthIndex].dayCircles[dayIndex].filled, year, weekday, currentState[monthIndex].dayCircles[dayIndex]._id)
+        .then((json) => {
+          currentState[monthIndex].dayCircles[dayIndex].id = json._id;
+
+          this.setState({
+            circles: currentState,
+          });
+        });
+    }
   }
 
   saveClick(circleFilled, year, weekday, dayCircle, habit) {
@@ -50,6 +61,18 @@ export default class SpiralCal extends Component {
         weekday,
         dayCircle,
         //habit,
+      }),
+    })
+    .then(res => res.json());
+  }
+
+  updateFill( id, circleFilled) {
+    return fetch('/api/days', {
+      headers: { 'content-type': 'application/json' },
+      method: 'PUT',
+      body: JSON.stringify({
+        id,
+        circleFilled,
       }),
     })
     .then(res => res.json());
