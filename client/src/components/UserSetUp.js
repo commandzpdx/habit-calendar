@@ -66,8 +66,8 @@ class UserSetUp extends Component {
       <div>
         <h1>SetUp</h1>
         <form onSubmit={this.handleSubmit}>
-          <select id="habit" onChange={this.handleSelection}>
-            <option value="" disabled selected>Select habit category</option>
+          <select id="habit" onChange={this.handleSelection} value={this.state.habitCategory}>
+            <option value="" disabled>Select habit category</option>
             <option value="exercise">Exercise</option>
             <option value="diet">Diet</option>
             <option value="habit">Habit</option>

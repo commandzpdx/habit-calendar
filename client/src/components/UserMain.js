@@ -11,8 +11,8 @@ export default function UserMain(props) {
     <div>
       <h1>Hi {firstName}</h1>
       <h3>didju do your {props.habit
-        ? <h3>{props.habit} {props.habitCategory} today?</h3>
-        : <h3>{props.habitCategory} today?</h3>}
+        ? `${props.habit} ${props.habitCategory} today?`
+        : `${props.habitCategory} today?`}
       </h3>
       <div>
         <SpiralCal />
