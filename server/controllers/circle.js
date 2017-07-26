@@ -1,9 +1,9 @@
-const MonthCircle = require('../models/monthCircle');
+const DayCircle = require('../models/dayCircle');
 
 const circleController = {
   getCircles(req, res, next) {
-    return MonthCircle
-      .findMonthCircles()
+    return DayCircle
+      .findDays()
       .then(circles => res.json(circles))
       .catch(next);
   },
