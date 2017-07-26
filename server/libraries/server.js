@@ -18,12 +18,20 @@ server.on('close', () => {
 
 // Start HTTP server.
 const start = (port = PORT) => new Promise((resolve, reject) => {
-  server.listen(port, err => (err ? reject(err) : resolve()));
+  server.listen(port, err => (
+    err
+    ? reject(err)
+    : resolve()
+  ));
 });
 
 // Stop HTTP server.
 const stop = () => new Promise((resolve, reject) => {
-  server.close(err => (err ? reject(err) : resolve()));
+  server.close(err => (
+    err
+    ? reject(err)
+    : resolve()
+  ));
 });
 
 module.exports = {
