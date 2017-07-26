@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const { Schema } = mongoose;
+const { Types } = Schema;
 
 const schema = new Schema({
   circleFilled: {
@@ -18,11 +19,11 @@ const schema = new Schema({
     trim: true,
   },
   dayCircle: {
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'DayCircle',
   },
   habit: {
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'Habit',
   },
 }, {
