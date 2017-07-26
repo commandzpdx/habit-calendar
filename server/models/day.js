@@ -21,10 +21,12 @@ const schema = new Schema({
   dayCircle: {
     type: Types.ObjectId,
     ref: 'DayCircle',
+    required: true,
   },
   habit: {
     type: Types.ObjectId,
     ref: 'Habit',
+    required: true,
   },
 }, {
   collection: 'days',
