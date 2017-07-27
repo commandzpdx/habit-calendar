@@ -11,10 +11,10 @@ import NotFound from './NotFound';
 function Main(props) {
   return (
     <main>
-      {/* Naving to the path '/firstname' or '/setup' is permitted only if the user is signed in  */}
+      {/* Navigating to the path '/firstname' or '/setup' is permitted only if the user is signed in  */}
       <Switch>
         <Route exact path="/" render={rest => <Home {...rest} updateState={props.updateState} />} />
-        <Route exact path="/signin" render={rest => <SignIn {...rest} updateState={props.updateState} />} />
+        <Route exact path="/signin" render={rest => <SignIn {...rest} updateState={props.updateState} habitID={props.habitID} />} />
         <Route
           exact
           path="/firstname"

@@ -58,7 +58,7 @@ class App extends Component {
         <div className="App">
           <Route path="/" render={rest => <NavBar {...rest} signedIn={this.state.signedIn} updateState={this.updateState} />} />
           <Main
-            name={this.state.name} habitCategory={this.state.habitCategory} habit={this.state.habit}
+            name={this.state.name} habitCategory={this.state.habitCategory} habit={this.state.habit} habitID={this.state.habitID}
             updateState={this.updateState} token={this.state.token} signedIn={this.state.signedIn}
           />
           <Route path="/" component={Footer} />
