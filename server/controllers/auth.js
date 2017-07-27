@@ -17,9 +17,6 @@ const authController = {
     // Copy the data from req.body
     const payload = Object.assign({}, req.body);
 
-    // Cache name
-    let name;
-
     // Remove user credentials from the request body
     delete req.body;
 
@@ -27,6 +24,7 @@ const authController = {
       .findOne({
         email: payload.email,
       })
+      .populate('habits')
       .then((user) => {
         // User or email/password combination doesn't exist, return error
         if (!user || !user.comparePassword(payload.password)) {
@@ -41,23 +39,28 @@ const authController = {
       })
       .then((user) => {
         // Join first and last name
-        name = `${user.firstName} ${user.lastName}`;
+        const name = `${user.firstName} ${user.lastName}`;
 
         // Create json web token
-        return jwt.sign({
-          _id: user._id,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
+        return Promise.all([
           name,
-        });
+          user.habits,
+          jwt.sign({
+            _id: user._id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            name,
+          }),
+        ]);
       })
-      .then((token) => {
+      .then(([name, habits, token]) => {
         return res
           .status(200)
           .json({
             name,
             token,
+            habits,
           });
       })
       .catch(next);
