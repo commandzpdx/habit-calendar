@@ -42,6 +42,7 @@ Main.propTypes = {
   name: PropTypes.string.isRequired,
   habitCategory: PropTypes.string.isRequired,
   habit: PropTypes.string.isRequired,
+  habitID: PropTypes.string.isRequired,
   updateState: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   signedIn: PropTypes.bool.isRequired,
