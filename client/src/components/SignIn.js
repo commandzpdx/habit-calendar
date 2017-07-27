@@ -45,7 +45,7 @@ class SignIn extends Component {
             errorMessage: '',
             password: '',
           }, () => {
-            // TODO: redirect to main page after signing in was successful and state was updated
+            // TODO: currently the user will only see the last habit submitted from '/setup'
             const theHabit = json.habits[json.habits.length - 1];
 
             this.props.updateState({
@@ -106,6 +106,7 @@ class SignIn extends Component {
 
 SignIn.propTypes = {
   updateState: PropTypes.func.isRequired,
+  habitID: PropTypes.string.isRequired,
 };
 
 export default SignIn;
