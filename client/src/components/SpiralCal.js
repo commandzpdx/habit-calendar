@@ -10,6 +10,8 @@ export default class SpiralCal extends Component {
       circles: [],
     };
     this.clickDayCircle = this.clickDayCircle.bind(this);
+    this.saveClick = this.saveClick.bind(this);
+    this.updateFill = this.updateFill.bind(this);
   }
 
   componentDidMount() {
@@ -19,11 +21,65 @@ export default class SpiralCal extends Component {
   }
 
   clickDayCircle(monthIndex, dayIndex) {
-    let currentState = [...this.state.circles];
-    currentState[monthIndex].dayCircles[dayIndex].filled = !currentState[monthIndex].dayCircles[dayIndex].filled;
-    this.setState({
-      circles: currentState,
-    });
+    const currentState = [...this.state.circles];
+    const month = currentState[monthIndex].month;
+    let day = currentState[monthIndex].dayCircles[dayIndex].textContent;
+    const year = new Date().getFullYear();
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const date = new Date(`${month} ${day}, ${year}`);
+    const weekday = weekdays[date.getDay()];
+
+    currentState[monthIndex].dayCircles[dayIndex].circleFilled = !currentState[monthIndex].dayCircles[dayIndex].circleFilled;
+    console.log(currentState[monthIndex].dayCircles[dayIndex]._id)
+    if (currentState[monthIndex].dayCircles[dayIndex].dayId) {  
+      this.updateFill(currentState[monthIndex].dayCircles[dayIndex].dayId, currentState[monthIndex].dayCircles[dayIndex].circleFilled)
+        .then(() => {
+          this.setState({
+            circles: currentState,
+          });
+        });
+    } else {
+      this.saveClick(
+          currentState[monthIndex].dayCircles[dayIndex].circleFilled,
+          year,
+          weekday,
+          currentState[monthIndex].dayCircles[dayIndex]._id,
+        )
+        .then((json) => {
+          currentState[monthIndex].dayCircles[dayIndex]._id = json._id;
+          this.setState({
+            circles: currentState,
+          });
+        });
+    }
+  }
+
+  saveClick(circleFilled, year, weekday, dayCircle, habit) {
+    //token check?
+    return fetch('/api/days', {
+      headers: { 'content-type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({
+        circleFilled,
+        year,
+        weekday,
+        dayCircle,
+        //habit,
+      }),
+    })
+    .then(res => res.json());
+  }
+
+  updateFill( id, circleFilled) {
+    return fetch('/api/days', {
+      headers: { 'content-type': 'application/json' },
+      method: 'PUT',
+      body: JSON.stringify({
+        id,
+        circleFilled,
+      }),
+    })
+    .then(res => res.json());
   }
 
   render() {
@@ -42,7 +98,7 @@ export default class SpiralCal extends Component {
                     <path
                       className={classNames({
                         [m.dayPathClassName]: true,
-                        filled: d.filled,
+                        filled: d.circleFilled,
                       })}
                       d={d.pathD}
                     />

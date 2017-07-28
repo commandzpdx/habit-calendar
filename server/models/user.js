@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const { Schema } = mongoose;
+const { Types } = Schema;
 
 const schema = new Schema({
   firstName: {
@@ -30,7 +31,7 @@ const schema = new Schema({
   },
   habits: [
     {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: 'Habit',
     },
   ],
