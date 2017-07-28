@@ -44,9 +44,15 @@ schema.statics.findDays = function findDays() {
       $project: {
         month: true,
         dayCircles: {
-          _id: {
-            $arrayElemAt: ['$day._id', 0],
+          dayId: {
+            $ifNull: [
+              {
+                $arrayElemAt: ['$day._id', 0],
+              },
+              '',
+            ],
           },
+          _id: '$_id',
           pathD: '$pathD',
           textContent: '$textContent',
           textTransform: '$textTransform',
