@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class SignIn extends Component {
@@ -12,6 +13,7 @@ class SignIn extends Component {
       email: '',
       errorMessage: '',
       password: '',
+      redirect: false,
     };
   }
 
@@ -43,12 +45,26 @@ class SignIn extends Component {
             errorMessage: '',
             password: '',
           }, () => {
-            // TODO: redirect to main page after signing in was successful and state was updated
+            // TODO: currently the user will only see the last habit submitted from '/setup'
+            let habitID = '';
+            let habit = '';
+            let habitCategory = '';
+            const theHabit = json.habits[json.habits.length - 1];
+
+            if (theHabit) {
+              habitID = theHabit._id;
+              habit = theHabit.habit;
+              habitCategory = theHabit.category;
+            }
+
             this.props.updateState({
               name: json.name,
               signedIn: true,
               token: json.token,
-            });
+              habitID,
+              habit,
+              habitCategory,
+            }, () => this.setState({ redirect: true }));
           });
         } else {
           this.setState({
@@ -59,6 +75,10 @@ class SignIn extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      const redirectTo = this.props.habitID ? '/firstname' : '/setup';
+      return <Redirect to={redirectTo} />;
+    }
     return (
       <div>
         <h1>Sign in:</h1>
@@ -95,6 +115,7 @@ class SignIn extends Component {
 
 SignIn.propTypes = {
   updateState: PropTypes.func.isRequired,
+  habitID: PropTypes.string.isRequired,
 };
 
 export default SignIn;

@@ -16,6 +16,7 @@ const schema = new Schema({
   },
   startDate: {
     type: Date,
+    default: Date.now(),
     required: true,
   },
   longestStreak: {
