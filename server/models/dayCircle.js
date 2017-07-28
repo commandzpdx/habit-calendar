@@ -27,6 +27,19 @@ const schema = new Schema({
   collection: 'dayCircles',
 });
 
+schema.statics.findDays = function findDays() {
+  return this.aggregate([
+    {
+      $lookup: {
+        from: 'days',
+        localField: 'dayCircle',
+        foreignField: '_id',
+        as: 'day',
+      },
+    },
+  ]);
+};
+
 const DayCircle = mongoose.model('DayCircle', schema);
 
 module.exports = DayCircle;

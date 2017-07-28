@@ -55,12 +55,34 @@ schema.statics.findMonthCircles = function findMonthCircles() {
   return this.aggregate([
     {
       $lookup: {
-        from: 'dayCircles',
+        from: 'dayCircle',
         localField: '_id',
         foreignField: 'month',
         as: 'dayCircles',
       },
     },
+    // {
+    //   $unwind: '$dayCircles',
+    // },
+    // {
+    //   $lookup: {
+    //     from: 'days',
+    //     localfield: '$dayCircles._id',
+    //     foreignField: 'dayCircle',
+    //     as: 'day',
+    //   },
+    // },
+    // {
+    //   $unwind: '$day',
+    // },
+    // {
+    //   $project: {
+    //     dayCircles: '$dayCircles',
+    //   },
+    // },
+    // {
+    //   $out: 'results',
+    // },
   ]);
 };
 
