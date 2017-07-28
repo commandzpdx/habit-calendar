@@ -8,7 +8,8 @@ export default function UserMain(props) {
   const firstName = nameArray[0];
   const months = [0, 'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
-  const date = new Date().toLocaleDateString().split('/'); // month/dd/yyyy
+  const dateArray = new Date().toLocaleDateString().split('/'); // month/dd/yyyy
+  const date = `${months[dateArray[0]]} ${dateArray[1]}, ${dateArray[2]}`;
 
   return (
     <div>
@@ -17,7 +18,7 @@ export default function UserMain(props) {
         ? `${props.habit} ${props.habitCategory} today?`
         : `${props.habitCategory} today?`}
       </h3>
-      <h3>{months[date[0]]} {date[1]}, {date[2]}</h3>
+      <h3>{date}</h3>
       <div>
         <SpiralCal habitID={props.habitID} />
       </div>
