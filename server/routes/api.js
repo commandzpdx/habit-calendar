@@ -6,6 +6,7 @@ const userController = require('../controllers/user');
 const monthCircleController = require('../controllers/monthCircle');
 const dayCircleController = require('../controllers/dayCircle');
 const circleController = require('../controllers/circle');
+const dayController = require('../controllers/day');
 const habitController = require('../controllers/habit');
 const errorController = require('../controllers/error');
 const { ensureAuth } = require('../middlewares/auth');
@@ -63,6 +64,12 @@ apiRouter.delete('/habits/:id', ensureAuth(), habitController.deleteHabit);
 // Circles
 
 apiRouter.get('/circles', circleController.getCircles);
+
+// Days
+
+apiRouter.post('/days', bodyParser.json(), dayController.saveFillDay);
+
+apiRouter.put('/days', bodyParser.json(), dayController.updateFillDay);
 
 // Errors
 apiRouter.use(errorController.notFound);

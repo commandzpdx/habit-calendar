@@ -51,19 +51,6 @@ const schema = new Schema({
   collection: 'monthCircles',
 });
 
-schema.statics.findMonthCircles = function findMonthCircles() {
-  return this.aggregate([
-    {
-      $lookup: {
-        from: 'dayCircles',
-        localField: '_id',
-        foreignField: 'month',
-        as: 'dayCircles',
-      },
-    },
-  ]);
-};
-
 const MonthCircle = mongoose.model('MonthCircle', schema);
 
 module.exports = MonthCircle;
