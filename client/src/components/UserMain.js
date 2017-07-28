@@ -1,15 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import SpiralCal from './SpiralCal';
 
-export default function UserMain() {
+export default function UserMain(props) {
+  const nameArray = props.name.split(' ');
+  const firstName = nameArray[0];
+
   return (
     <div>
-      <h1>First name</h1>
-      <h3>Category</h3>
-      <h3>Habit (optional)</h3>
+      <h1>Hi {firstName}</h1>
+      <h3>didju do your {props.habit
+        ? `${props.habit} ${props.habitCategory} today?`
+        : `${props.habitCategory} today?`}
+      </h3>
       <div>
-        <SpiralCal />
+        <SpiralCal habitID={props.habitID} />
       </div>
     </div>
   );
 }
+
+UserMain.propTypes = {
+  name: PropTypes.string.isRequired,
+  habit: PropTypes.string.isRequired,
+  habitCategory: PropTypes.string.isRequired,
+  habitID: PropTypes.string.isRequired,
+};

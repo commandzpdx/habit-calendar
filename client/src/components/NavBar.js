@@ -9,6 +9,9 @@ export default function NavBar(props) {
       name: '',
       signedIn: false,
       token: '',
+      habit: '',
+      habitCategory: '',
+      habitID: '',
     }, () => { props.history.push('/'); });
   };
 
