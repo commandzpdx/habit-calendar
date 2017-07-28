@@ -29,19 +29,24 @@ export default class SpiralCal extends Component {
     const date = new Date(`${month} ${day}, ${year}`);
     const weekday = weekdays[date.getDay()];
 
-    currentState[monthIndex].dayCircles[dayIndex].filled = !currentState[monthIndex].dayCircles[dayIndex].filled;
-    if (currentState[monthIndex].dayCircles[dayIndex].id) {  
-      this.updateFill(currentState[monthIndex].dayCircles[dayIndex].id, currentState[monthIndex].dayCircles[dayIndex].filled)
+    currentState[monthIndex].dayCircles[dayIndex].circleFilled = !currentState[monthIndex].dayCircles[dayIndex].circleFilled;
+    console.log(currentState[monthIndex].dayCircles[dayIndex]._id)
+    if (currentState[monthIndex].dayCircles[dayIndex].dayId) {  
+      this.updateFill(currentState[monthIndex].dayCircles[dayIndex].dayId, currentState[monthIndex].dayCircles[dayIndex].circleFilled)
         .then(() => {
           this.setState({
             circles: currentState,
           });
         });
     } else {
-      this.saveClick(currentState[monthIndex].dayCircles[dayIndex].filled, year, weekday, currentState[monthIndex].dayCircles[dayIndex]._id)
+      this.saveClick(
+          currentState[monthIndex].dayCircles[dayIndex].circleFilled,
+          year,
+          weekday,
+          currentState[monthIndex].dayCircles[dayIndex]._id,
+        )
         .then((json) => {
-          currentState[monthIndex].dayCircles[dayIndex].id = json._id;
-
+          currentState[monthIndex].dayCircles[dayIndex]._id = json._id;
           this.setState({
             circles: currentState,
           });
@@ -51,7 +56,6 @@ export default class SpiralCal extends Component {
 
   saveClick(circleFilled, year, weekday, dayCircle, habit) {
     //token check?
-
     return fetch('/api/days', {
       headers: { 'content-type': 'application/json' },
       method: 'POST',
@@ -94,7 +98,7 @@ export default class SpiralCal extends Component {
                     <path
                       className={classNames({
                         [m.dayPathClassName]: true,
-                        filled: d.filled,
+                        filled: d.circleFilled,
                       })}
                       d={d.pathD}
                     />

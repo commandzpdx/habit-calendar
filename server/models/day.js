@@ -26,7 +26,7 @@ const schema = new Schema({
   habit: {
     type: Types.ObjectId,
     ref: 'Habit',
-    required: true,
+    //required: true,
   },
 }, {
   collection: 'days',
