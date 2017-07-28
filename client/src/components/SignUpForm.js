@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // import fetch from '../fetch';
@@ -12,6 +13,7 @@ export default class SignUpForm extends Component {
       email: '',
       password: '',
       errorMessage: '',
+      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -53,7 +55,7 @@ export default class SignUpForm extends Component {
               name: res.name,
               signedIn: true,
               token: res.token,
-            });
+            }, () => this.setState({ redirect: true }));
           });
         } else {
           this.setState({
@@ -64,6 +66,9 @@ export default class SignUpForm extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/setup" />;
+    }
     return (
       <div>
         <h3>Sign up:</h3>
