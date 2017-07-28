@@ -46,15 +46,24 @@ class SignIn extends Component {
             password: '',
           }, () => {
             // TODO: currently the user will only see the last habit submitted from '/setup'
+            let habitID = '';
+            let habit = '';
+            let habitCategory = '';
             const theHabit = json.habits[json.habits.length - 1];
+
+            if (theHabit) {
+              habitID = theHabit._id;
+              habit = theHabit.habit;
+              habitCategory = theHabit.category;
+            }
 
             this.props.updateState({
               name: json.name,
               signedIn: true,
               token: json.token,
-              habitID: theHabit._id,
-              habit: theHabit.habit,
-              habitCategory: theHabit.category,
+              habitID,
+              habit,
+              habitCategory,
             }, () => this.setState({ redirect: true }));
           });
         } else {
