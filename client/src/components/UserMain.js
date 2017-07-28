@@ -15,7 +15,7 @@ export default function UserMain(props) {
         : `${props.habitCategory} today?`}
       </h3>
       <div>
-        <SpiralCal />
+        <SpiralCal habitID={props.habitID} />
       </div>
     </div>
   );
@@ -25,4 +25,5 @@ UserMain.propTypes = {
   name: PropTypes.string.isRequired,
   habit: PropTypes.string.isRequired,
   habitCategory: PropTypes.string.isRequired,
+  habitID: PropTypes.string.isRequired,
 };

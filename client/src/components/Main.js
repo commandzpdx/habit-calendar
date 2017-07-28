@@ -20,7 +20,7 @@ function Main(props) {
           path="/firstname"
           render={rest => (
             props.signedIn
-              ? <UserMain {...rest} name={props.name} habitCategory={props.habitCategory} habit={props.habit} />
+              ? <UserMain {...rest} name={props.name} habitID={props.habitID} habitCategory={props.habitCategory} habit={props.habit} />
               : <Redirect to="/" />)}
         />
         <Route
