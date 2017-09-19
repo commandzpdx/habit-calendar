@@ -1,10 +1,9 @@
 const { assert } = require('chai');
 
-const errorHandler = require('../../middlewares/handleErrors');
+const errorController = require('../../controllers/error');
 const User = require('../../models/user');
 
 describe('handle-errors', () => {
-
   // Mock up the response object that's returned in handle-errors.js
   const resObj = {
     status(code) {
@@ -80,5 +79,4 @@ describe('handle-errors', () => {
         assert.equal(resObj.body.errors.lastName.message, 'Path `lastName` is required.');
       });
   });
-
 });

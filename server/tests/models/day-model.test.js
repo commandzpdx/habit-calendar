@@ -1,4 +1,4 @@
-const assert = require('chai').assert;
+const { assert } = require('chai');
 
 const Day = require('../../models/day');
 
@@ -14,18 +14,17 @@ describe('day model', () => {
     const day1 = new Day({ year: 2001 });
     return day1.validate()
       .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
 
   it('requires year (validation fails when no year)', () => {
     const day2 = new Day({ circleFilled: false });
     return day2.validate()
       .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
-
 });

@@ -1,4 +1,4 @@
-const assert = require('chai').assert;
+const { assert } = require('chai');
 
 const User = require('../../models/user');
 
@@ -18,10 +18,10 @@ describe('user model', () =>{
       email: 'd@email.com',
       password: 'f',
     }).validate()
-    .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
 
   it('requires lastName', () => {
@@ -30,10 +30,10 @@ describe('user model', () =>{
       email: 'd@email.com',
       password: 'f',
     }).validate()
-    .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
 
   it('requires an email', () => {
@@ -42,10 +42,10 @@ describe('user model', () =>{
       lastName: 's',
       password: 'f',
     }).validate()
-    .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
 
   it('sets hash from password and correctly compares it', () => {
@@ -60,5 +60,4 @@ describe('user model', () =>{
     assert.isTrue(user.comparePassword('password'));
     assert.isFalse(user.comparePassword('notpassword'));
   });
-
 });

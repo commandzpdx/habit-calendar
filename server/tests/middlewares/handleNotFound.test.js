@@ -1,9 +1,8 @@
 const { assert } = require('chai');
 
-const handleNotFound = require('../../middlewares/handleNotFound')();
+const errorController = require('../../controllers/error');
 
 describe('Handle Not Found Middleware', () => {
-
   it('Should return a 404 reponse', () => {
     const req = {
       method: 'GET',
@@ -28,5 +27,4 @@ describe('Handle Not Found Middleware', () => {
       message: `Cannot ${req.method} ${req.path}`,
     }));
   });
-
 });
