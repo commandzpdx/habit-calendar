@@ -1,3 +1,9 @@
+/**
+ * Month Circle Model.
+ *
+ * @module server/models/MonthCircle
+ */
+
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;

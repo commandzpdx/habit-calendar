@@ -4,7 +4,7 @@
  * @module server/controllers/monthCircle
  */
 
-const MonthCircle = require('../models/monthCircle');
+const MonthCircle = require('../models/MonthCircle');
 
 const createMonth = (req, res, next) => {
   const data = req.body;

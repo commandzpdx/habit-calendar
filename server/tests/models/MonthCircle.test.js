@@ -1,6 +1,12 @@
+/**
+ * Month Circle Model Test.
+ *
+ * @module server/tests/models/MonthCircle.test
+ */
+
 const { assert } = require('chai');
 
-const MonthCircle = require('../../models/monthCircle');
+const MonthCircle = require('../../models/MonthCircle');
 
 describe('monthCircle model', () => {
   it('example with all required fields', () => {

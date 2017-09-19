@@ -1,3 +1,9 @@
+/**
+ * Habit Model.
+ *
+ * @module server/models/Habit
+ */
+
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;

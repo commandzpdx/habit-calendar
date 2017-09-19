@@ -1,3 +1,9 @@
+/**
+ * Day Circle Model.
+ *
+ * @module server/models/DayCircle
+ */
+
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;

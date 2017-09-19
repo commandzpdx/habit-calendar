@@ -1,3 +1,9 @@
+/**
+ * Database Library.
+ *
+ * @module server/libraries/database
+ */
+
 const mongoose = require('mongoose');
 
 const ENV = require('../constants/env');

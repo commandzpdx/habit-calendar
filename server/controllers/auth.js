@@ -5,7 +5,7 @@
  */
 
 const jwt = require('../libraries/jsonWebToken');
-const User = require('../models/user');
+const User = require('../models/User');
 
 const signin = (req, res, next) => {
   // Copy the data from req.body

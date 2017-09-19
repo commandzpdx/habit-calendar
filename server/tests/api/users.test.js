@@ -1,3 +1,9 @@
+/**
+ * Users API Test.
+ *
+ * @module server/tests/api/users.test
+ */
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 

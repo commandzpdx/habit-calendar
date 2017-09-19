@@ -1,3 +1,9 @@
+/**
+ * JSON Web Token Library Test.
+ *
+ * @module server/tests/libraries/jsonWebToken.test
+ */
+
 const { assert } = require('chai');
 
 const jwt = require('../../libraries/jsonWebToken');

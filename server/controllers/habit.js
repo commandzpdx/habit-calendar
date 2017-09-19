@@ -1,11 +1,11 @@
 /**
  * Habit Controller.
  *
- * @module server/controllers/error
+ * @module server/controllers/habit
  */
 
-const Habit = require('../models/habit');
-const User = require('../models/user');
+const Habit = require('../models/Habit');
+const User = require('../models/User');
 
 const postHabit = (req, res, next) => {
   const data = req.body;
