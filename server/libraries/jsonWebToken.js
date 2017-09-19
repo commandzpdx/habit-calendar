@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = require('../config/constants');
+const ENV = require('../constants/env');
 
 /**
  * Create a token.
  */
 const sign = payload => new Promise((resolve, reject) => {
-  jwt.sign(payload, JWT_SECRET, null, (error, token) => (
+  jwt.sign(payload, ENV.JWT_SECRET, null, (error, token) => (
     error
     ? reject(error)
     : resolve(token)
@@ -17,7 +17,7 @@ const sign = payload => new Promise((resolve, reject) => {
  * Verify a token.
  */
 const verify = token => new Promise((resolve, reject) => {
-  jwt.verify(token, JWT_SECRET, { complete: true }, (error, payload) => (
+  jwt.verify(token, ENV.JWT_SECRET, { complete: true }, (error, payload) => (
     error
     ? reject(error)
     : resolve(payload)

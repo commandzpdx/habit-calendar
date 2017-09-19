@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const { MONGODB_URI_TEST } = require('../../config/constants');
+const ENV = require('../../constants/env');
 const app = require('../../libraries/app');
 const database = require('../../libraries/database');
 
@@ -10,7 +10,7 @@ let request;
 
 chai.use(chaiHttp);
 
-before(() => database.connect(MONGODB_URI_TEST));
+before(() => database.connect(ENV.MONGODB_URI_TEST));
 
 before(() => {
   request = chai.request(app);
