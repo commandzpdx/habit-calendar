@@ -9,7 +9,6 @@ const payload = {
 let token;
 
 describe('JSON Web Token Library', () => {
-
   it('Should fail signing token because no payload provided', () => {
     return jwt
       .sign()
@@ -54,5 +53,4 @@ describe('JSON Web Token Library', () => {
         assert.equal(decodedPayload._id, payload._id);
       });
   });
-
 });

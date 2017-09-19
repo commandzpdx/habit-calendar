@@ -1,10 +1,11 @@
 const { assert } = require('chai');
 
 const jwt = require('../../libraries/jsonWebToken');
-const ensureAuth = require('../../middlewares/ensureAuth')();
+const authMiddlewares = require('../../middlewares/auth');
+
+const ensureAuth = authMiddlewares.ensureAuth();
 
 describe('Ensure Auth Middleware', () => {
-
   const payload = {
     _id: '1a2b3c',
   };
@@ -47,5 +48,4 @@ describe('Ensure Auth Middleware', () => {
       assert.propertyVal(req.user, '_id', '1a2b3c');
     });
   });
-
 });
