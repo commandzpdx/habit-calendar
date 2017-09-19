@@ -11,7 +11,11 @@
     "react"
   ],
   "rules": {
+    "arrow-body-style": "off",
     "max-len": "off",
+    "no-console": "off",
+    "no-underscore-dangle": "off",
+    "padded-blocks": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-max-props-per-line": "off"
   }

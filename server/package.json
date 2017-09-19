@@ -1,7 +1,7 @@
 {
-  "name": "habit-calendar",
+  "name": "didju-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Didju server-side codebase.",
   "private": true,
   "scripts": {
     "start": "node index.js",
@@ -10,29 +10,29 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.17.2",
-    "express": "^4.15.3",
-    "jsonwebtoken": "^7.4.1",
-    "mongoose": "^4.10.4",
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^8.0.1",
+    "mongoose": "^4.11.12",
     "morgan": "^1.8.2"
   },
   "devDependencies": {
-    "chai": "^4.0.2",
+    "chai": "^4.1.2",
     "chai-http": "^3.0.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.2.0",
-    "mocha": "^3.4.2",
-    "nodemon": "^1.11.0"
+    "eslint": "^4.6.0",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.5.3",
+    "nodemon": "^1.12.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/commandzpdx/habit-calendar.git"
+    "url": "git+https://github.com/didju/didju.git"
   },
-  "author": "commandzpdx (https://github.com/commandzpdx)",
+  "author": "Didju (https://github.com/didju)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/commandzpdx/habit-calendar/issues"
+    "url": "https://github.com/didju/didju/issues"
   },
-  "homepage": "https://github.com/commandzpdx/habit-calendar#readme"
+  "homepage": "https://github.com/didju/didju#readme"
 }
