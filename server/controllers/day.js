@@ -4,7 +4,7 @@
  * @module server/controllers/day
  */
 
-const Day = require('../models/day');
+const Day = require('../models/Day');
 
 const saveFillDay = (req, res, next) => {
   const data = req.body;

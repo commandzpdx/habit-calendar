@@ -4,7 +4,7 @@
  * @module server/controllers/dayCircle
  */
 
-const DayCircle = require('../models/dayCircle');
+const DayCircle = require('../models/DayCircle');
 
 const createDays = (req, res, next) => DayCircle
   .insertMany(req.body)

@@ -1,3 +1,9 @@
+/**
+ * App Library.
+ *
+ * @module server/libraries/app
+ */
+
 const express = require('express');
 const morgan = require('morgan');
 
@@ -13,12 +19,16 @@ const app = express();
 app.use(morgan(ENV.NODE === 'production' ? 'common' : 'dev'));
 
 // Serve static files.
-if (ENV.NODE === 'production') app.use(express.static(PATHS.SERVER_PUBLIC));
+if (ENV.NODE === 'production') {
+  app.use(express.static(PATHS.SERVER_PUBLIC));
+}
 
 // API routes.
 app.use('/api', apiRoutes);
 
 // Web page routes.
-if (ENV.NODE === 'production') app.use('/', webRoutes);
+if (ENV.NODE === 'production') {
+  app.use('/', webRoutes);
+}
 
 module.exports = app;

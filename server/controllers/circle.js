@@ -4,7 +4,7 @@
  * @module server/controllers/circle
  */
 
-const DayCircle = require('../models/dayCircle');
+const DayCircle = require('../models/DayCircle');
 
 const getCircles = (req, res, next) => DayCircle
   .findDays()

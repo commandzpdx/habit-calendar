@@ -1,3 +1,9 @@
+/**
+ * User Model.
+ *
+ * @module server/models/User
+ */
+
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 

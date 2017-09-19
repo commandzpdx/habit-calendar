@@ -1,3 +1,9 @@
+/**
+ * Day Model.
+ *
+ * @module server/models/Day
+ */
+
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -26,7 +32,7 @@ const schema = new Schema({
   habit: {
     type: Types.ObjectId,
     ref: 'Habit',
-    //required: true,
+    // required: true,
   },
 }, {
   collection: 'days',
