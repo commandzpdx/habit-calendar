@@ -6,12 +6,12 @@
 
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..', '..');
-const SERVER_INDEX = `${ROOT}/server/public/index.html`;
-const SERVER_PUBLIC = `${ROOT}/server/public`;
+const ROOT = path.resolve(__dirname, '..');
+const PUBLIC = `${ROOT}/public`;
+const INDEX = `${ROOT}/public/index.html`;
 
 module.exports = {
+  INDEX,
+  PUBLIC,
   ROOT,
-  SERVER_INDEX,
-  SERVER_PUBLIC,
 };

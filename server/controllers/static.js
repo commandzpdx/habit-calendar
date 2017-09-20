@@ -6,7 +6,7 @@
 
 const PATHS = require('../constants/paths');
 
-const index = (req, res) => res.sendFile(PATHS.SERVER_INDEX);
+const index = (req, res) => res.sendFile(PATHS.INDEX);
 
 module.exports = {
   index,
