@@ -74,11 +74,11 @@
 
 ### Testing
 
-Run tests in `client` or `server` directory.
+1. Run tests in `client` or `server` directory.
 
-```
-npm test
-```
+    ```
+    npm test
+    ```
 
 ### Production
 
