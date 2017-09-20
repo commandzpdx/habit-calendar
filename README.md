@@ -76,9 +76,9 @@
 
 Run tests in `client` or `server` directory.
 
-    ```
-    npm test
-    ```
+```
+npm test
+```
 
 ### Production
 
