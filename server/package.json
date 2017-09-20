@@ -4,6 +4,7 @@
   "description": "Didju server-side codebase.",
   "private": true,
   "scripts": {
+    "deploy": "now --public && now alias",
     "start": "node index.js",
     "start:watch": "nodemon index.js",
     "test": "mocha --recursive tests"
