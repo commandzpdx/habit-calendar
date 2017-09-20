@@ -17,53 +17,69 @@ const habitController = require('../controllers/habit');
 const errorController = require('../controllers/error');
 const { ensureAuth } = require('../middlewares/auth');
 
-// Express router for API
-const apiRouter = Router();
+// Express router for API routes.
+const router = Router();
 
-// User signin
-apiRouter.post('/user/signin', bodyParser.json(), authController.signin);
+// Circles.
+router.route('/circles')
+  .get(circleController.getCircles);
 
-// User token verification
-apiRouter.get('/user/token', ensureAuth(), authController.token);
+// Day circles.
+router.route('/day-circles')
+  .get(dayCircleController.getDays)
+  .post(bodyParser.json(), dayCircleController.createDays);
 
-// User signup
-apiRouter.post('/users', bodyParser.json(), userController.signup);
+router.route('/day-circles/day')
+  .post(bodyParser.json(), dayCircleController.createDay);
 
-// Month circles
-apiRouter.post('/month-circles', bodyParser.json(), monthCircleController.createMonth);
-apiRouter.get('/month-circles', monthCircleController.getMonths);
-apiRouter.get('/month-circles/:id', monthCircleController.getMonth);
-apiRouter.delete('/month-circles/:id', monthCircleController.deleteMonth);
-apiRouter.put('/month-circles/:id', bodyParser.json(), monthCircleController.updateMonth);
+router.route('/day-circles/:id')
+  .delete(dayCircleController.deleteDay)
+  .get(dayCircleController.getDay)
+  .put(bodyParser.json(), dayCircleController.updateDay);
 
-// Day circles
-apiRouter.post('/day-circles', bodyParser.json(), dayCircleController.createDays);
-apiRouter.post('/day-circles/day', bodyParser.json(), dayCircleController.createDay);
-apiRouter.get('/day-circles', dayCircleController.getDays);
-apiRouter.get('/day-circles/:id', dayCircleController.getDay);
-apiRouter.delete('/day-circles/:id', dayCircleController.deleteDay);
-apiRouter.put('/day-circles/:id', bodyParser.json(), dayCircleController.updateDay);
+// Days.
+router.route('/days')
+  .post(bodyParser.json(), dayController.saveFillDay)
+  .put(bodyParser.json(), dayController.updateFillDay);
 
-// Habits
-apiRouter.post('/habits', ensureAuth(), bodyParser.json(), habitController.postHabit);
-apiRouter.get('/habits/:id', ensureAuth(), habitController.getHabit);
-apiRouter.get('/habits', ensureAuth(), habitController.getAllHabits);
-// TODO: these PUT and DELETE methods need limitations
-// currently any logged in user can delete or edit all habits
-apiRouter.put('/habits/:id', ensureAuth(), bodyParser.json(), habitController.updateHabit);
-apiRouter.delete('/habits/:id', ensureAuth(), habitController.deleteHabit);
+// Habits.
+router.route('/habits')
+  .get(ensureAuth(), habitController.getAllHabits)
+  .post(ensureAuth(), bodyParser.json(), habitController.postHabit);
 
-// Circles
-apiRouter.get('/circles', circleController.getCircles);
+router.route('/habits/:id')
+  // TODO: these PUT and DELETE methods need limitations
+  // currently any logged in user can delete or edit all habits
+  .delete(ensureAuth(), habitController.deleteHabit)
+  .get(ensureAuth(), habitController.getHabit)
+  .put(ensureAuth(), bodyParser.json(), habitController.updateHabit);
 
-// Days
-apiRouter.post('/days', bodyParser.json(), dayController.saveFillDay);
-apiRouter.put('/days', bodyParser.json(), dayController.updateFillDay);
+// Month circles.
+router.route('/month-circles')
+  .get(monthCircleController.getMonths)
+  .post(bodyParser.json(), monthCircleController.createMonth);
 
-// Errors
-apiRouter.use(errorController.notFound);
-apiRouter.use(errorController.errorByName);
-apiRouter.use(errorController.errorByCode);
-apiRouter.use(errorController.internalServer);
+router.route('/month-circles/:id')
+  .delete(monthCircleController.deleteMonth)
+  .get(monthCircleController.getMonth)
+  .put(bodyParser.json(), monthCircleController.updateMonth);
 
-module.exports = apiRouter;
+// User signin.
+router.route('/user/signin')
+  .post(bodyParser.json(), authController.signin);
+
+// User token verification.
+router.route('/user/token')
+  .get(ensureAuth(), authController.token);
+
+// User signup.
+router.route('/users')
+  .post(bodyParser.json(), userController.signup);
+
+// Errors.
+router.use(errorController.notFound);
+router.use(errorController.errorByName);
+router.use(errorController.errorByCode);
+router.use(errorController.internalServer);
+
+module.exports = router;

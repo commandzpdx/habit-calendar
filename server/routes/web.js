@@ -8,8 +8,11 @@ const { Router } = require('express');
 
 const staticController = require('../controllers/static');
 
-const webRouter = Router();
+// Express router for web routes.
+const router = Router();
 
-webRouter.get('*', staticController.index);
+// Render single page app.
+router.route('*')
+  .get(staticController.index);
 
-module.exports = webRouter;
+module.exports = router;
