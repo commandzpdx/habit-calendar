@@ -20,7 +20,7 @@ app.use(morgan(ENV.NODE === 'production' ? 'common' : 'dev'));
 
 // Serve static files.
 if (ENV.NODE === 'production') {
-  app.use(express.static(PATHS.SERVER_PUBLIC));
+  app.use(express.static(PATHS.PUBLIC));
 }
 
 // API routes.
