@@ -32,18 +32,23 @@
     npm install
     ```
 
-6. Create `.env` file in the `server` directory and add the following variables:
+6. Create `.env` file in the `client` directory and add the following variables:
+
+    ```
+    PUBLIC_URL=/
+    ```
+
+7. Create `.env` file in the `server` directory and add the following variables:
 
     ```
     JWT_SECRET=your-jwt-secret
     MONGODB_URI=your-mongo-uri
-    MONGODB_URI_TEST=your-mongo-uri-for-test
     NODE_ENV=production
     ```
 
     Set value for `JWT_SECRET` to something that'll be kept to yourself or your team.
 
-    Set value for `MONGODB_URI` and `MONGODB_URI_TEST` to your production MongoDB server. You can setup a MongoDB server with [mLab](https://mlab.com).
+    Set value for `MONGODB_URI` to your production MongoDB server. You can setup a MongoDB server with [mLab](https://mlab.com).
 
 ## Usage
 
@@ -69,7 +74,7 @@
 
 ### Testing
 
-1. Run tests in `client` or `server` directory.
+Run tests in `client` or `server` directory.
 
     ```
     npm test
@@ -86,7 +91,7 @@
 2. Set environment variables in `server` directory.
 
     ```
-    export $(cat .env)
+    export `cat .env`
     ```
 
 3. Start server in `server` directory.
@@ -106,7 +111,7 @@
 2. Deploy to Now from `server` directory.
 
     ```
-    now && now alias
+    npm run deploy
     ```
 
 ## Authors
