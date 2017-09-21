@@ -20,7 +20,7 @@ export default function UserMain(props) {
       </h3>
       <h3>{date}</h3>
       <div>
-        <SpiralCal habitID={props.habitID} />
+        <SpiralCal habitID={props.habitID} token={props.token} />
       </div>
     </div>
   );

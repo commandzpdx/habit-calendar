@@ -15,14 +15,14 @@ const circleController = require('../controllers/circle');
 const dayController = require('../controllers/day');
 const habitController = require('../controllers/habit');
 const errorController = require('../controllers/error');
-const { ensureAuth } = require('../middlewares/auth');
+const authMiddlewares = require('../middlewares/auth');
 
 // Express router for API routes.
 const router = Router();
 
 // Circles.
 router.route('/circles')
-  .get(circleController.getCircles);
+  .get(authMiddlewares.ensureAuth(), circleController.getCircles);
 
 // Day circles.
 router.route('/day-circles')
@@ -39,20 +39,20 @@ router.route('/day-circles/:id')
 
 // Days.
 router.route('/days')
-  .post(bodyParser.json(), dayController.createFillDay)
-  .put(bodyParser.json(), dayController.updateFillDay);
+  .post(authMiddlewares.ensureAuth(), bodyParser.json(), dayController.createFillDay)
+  .put(authMiddlewares.ensureAuth(), bodyParser.json(), dayController.updateFillDay);
 
 // Habits.
 router.route('/habits')
-  .get(ensureAuth(), habitController.getHabits)
-  .post(ensureAuth(), bodyParser.json(), habitController.createHabit);
+  .get(authMiddlewares.ensureAuth(), habitController.getHabits)
+  .post(authMiddlewares.ensureAuth(), bodyParser.json(), habitController.createHabit);
 
 router.route('/habits/:id')
   // TODO: these PUT and DELETE methods need limitations
   // currently any logged in user can delete or edit all habits
-  .delete(ensureAuth(), habitController.deleteHabit)
-  .get(ensureAuth(), habitController.getHabit)
-  .put(ensureAuth(), bodyParser.json(), habitController.updateHabit);
+  .delete(authMiddlewares.ensureAuth(), habitController.deleteHabit)
+  .get(authMiddlewares.ensureAuth(), habitController.getHabit)
+  .put(authMiddlewares.ensureAuth(), bodyParser.json(), habitController.updateHabit);
 
 // Month circles.
 router.route('/month-circles')
@@ -70,7 +70,7 @@ router.route('/user/signin')
 
 // User token verification.
 router.route('/user/token')
-  .get(ensureAuth(), authController.token);
+  .get(authMiddlewares.ensureAuth(), authController.token);
 
 // User signup.
 router.route('/users')
