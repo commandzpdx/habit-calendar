@@ -15,7 +15,12 @@ export default class SpiralCal extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/circles')
+    fetch('/api/circles', {
+      headers: {
+        Authorization: `Bearer ${this.props.token}`,
+        'Content-Type': 'application/json',
+      },
+    })
       .then(res => res.json())
       .then(circles => this.setState({ circles }));
   }
@@ -44,6 +49,7 @@ export default class SpiralCal extends Component {
           year,
           weekday,
           currentState[monthIndex].dayCircles[dayIndex]._id,
+          this.props.habitID,
         )
         .then((json) => {
           currentState[monthIndex].dayCircles[dayIndex]._id = json._id;
@@ -55,16 +61,19 @@ export default class SpiralCal extends Component {
   }
 
   saveClick(circleFilled, year, weekday, dayCircle, habit) {
-    //token check?
+    // token check?
     return fetch('/api/days', {
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${this.props.token}`,
+        'Content-Type': 'application/json',
+      },
       method: 'POST',
       body: JSON.stringify({
         circleFilled,
         year,
         weekday,
         dayCircle,
-        //habit,
+        habit,
       }),
     })
     .then(res => res.json());
@@ -72,7 +81,10 @@ export default class SpiralCal extends Component {
 
   updateFill( id, circleFilled) {
     return fetch('/api/days', {
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${this.props.token}`,
+        'Content-Type': 'application/json',
+      },
       method: 'PUT',
       body: JSON.stringify({
         id,
