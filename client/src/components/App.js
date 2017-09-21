@@ -26,7 +26,7 @@ class App extends Component {
   // validates the token everytime you come to the page
   componentWillMount() {
     if (this.state.token) {
-      fetch('/api/user/token', { Headers: { Authorization: `Bearer ${this.state.token}` } })
+      fetch('/api/user/token', { headers: { Authorization: `Bearer ${this.state.token}` } })
         .then(
         (res) => {
           if (res.status === 401) {
