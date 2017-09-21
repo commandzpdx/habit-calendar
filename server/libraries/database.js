@@ -26,7 +26,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 // Connect to MongoDB.
-const connect = (uri = ENV.MONGODB_URI) => mongoose.connect(uri);
+const connect = (uri = ENV.MONGODB_URI) => mongoose.connect(uri, { useMongoClient: true });
 
 // Disconnect from MongoDB.
 const disconnect = () => mongoose.connection.close();

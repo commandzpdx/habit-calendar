@@ -17,14 +17,14 @@ let address;
 
 // Log message when server starts.
 server.on('listening', () => {
-  address = server.address()
+  address = server.address();
 
-  console.log(`server running at port ${address.port}`);
+  console.log(`Server running at port ${address.port}`);
 });
 
 // Log message when server stops.
 server.on('close', () => {
-  console.log(`server stopped at port ${address.port}`);
+  console.log(`Server stopped at port ${address.port}`);
 });
 
 // Start HTTP server.
