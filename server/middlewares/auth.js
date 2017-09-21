@@ -8,17 +8,15 @@ const jwt = require('../libraries/jsonWebToken');
 
 // Check if JSON web token is valid or not.
 const ensureAuth = () => (req, res, next) => {
-  const [bearer, token] = req
-    .get('Authorization')
-    .split(' ');
-  const unauthorized = {
-    code: 401,
-    message: 'Unauthorized',
-  };
+  const authorization = req.get('Authorization') || '';
+  const [bearer, token] = authorization.split(' ');
+
+  const newError = new Error('Unauthorized');
+  newError.code = 401;
 
   // No Authorization header or "Bearer" isn't in the header
   if (bearer !== 'Bearer' || !token) {
-    return next(unauthorized);
+    throw newError;
   }
 
   return jwt
@@ -31,7 +29,7 @@ const ensureAuth = () => (req, res, next) => {
     })
     .catch(() => {
       // Token is invalid, set response to 401
-      next(unauthorized);
+      throw newError;
     });
 };
 
