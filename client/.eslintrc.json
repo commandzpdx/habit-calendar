@@ -12,6 +12,7 @@
   ],
   "rules": {
     "arrow-body-style": "off",
+    "arrow-parens": ["error", "always"],
     "max-len": "off",
     "no-console": "off",
     "no-underscore-dangle": "off",

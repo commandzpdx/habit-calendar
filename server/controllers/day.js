@@ -6,20 +6,17 @@
 
 const Day = require('../models/Day');
 
-const saveFillDay = (req, res, next) => {
-  const data = req.body;
-
-  return new Day(data).save()
-    .then(day => res.json(day))
-    .catch(next);
-};
+const createFillDay = (req, res, next) => new Day(req.body)
+  .save()
+  .then((day) => res.json(day))
+  .catch(next);
 
 const updateFillDay = (req, res, next) => Day
   .findByIdAndUpdate(req.body.id, { circleFilled: req.body.filled }, { new: true })
-  .then(circle => res.json(circle))
+  .then((circle) => res.json(circle))
   .catch(next);
 
 module.exports = {
-  saveFillDay,
+  createFillDay,
   updateFillDay,
 };

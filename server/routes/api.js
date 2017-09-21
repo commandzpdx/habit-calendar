@@ -39,13 +39,13 @@ router.route('/day-circles/:id')
 
 // Days.
 router.route('/days')
-  .post(bodyParser.json(), dayController.saveFillDay)
+  .post(bodyParser.json(), dayController.createFillDay)
   .put(bodyParser.json(), dayController.updateFillDay);
 
 // Habits.
 router.route('/habits')
-  .get(ensureAuth(), habitController.getAllHabits)
-  .post(ensureAuth(), bodyParser.json(), habitController.postHabit);
+  .get(ensureAuth(), habitController.getHabits)
+  .post(ensureAuth(), bodyParser.json(), habitController.createHabit);
 
 router.route('/habits/:id')
   // TODO: these PUT and DELETE methods need limitations
