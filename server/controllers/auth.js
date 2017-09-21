@@ -15,9 +15,7 @@ const signin = (req, res, next) => {
   delete req.body;
 
   return User
-    .findOne({
-      email: payload.email,
-    })
+    .findOne({ email: payload.email })
     .populate('habits')
     .then((user) => {
       // User or email/password combination doesn't exist, return error
@@ -32,10 +30,10 @@ const signin = (req, res, next) => {
       return user;
     })
     .then((user) => {
-      // Join first and last name
+      // Join first and last name.
       const name = `${user.firstName} ${user.lastName}`;
 
-      // Create json web token
+      // Create JWT.
       return Promise.all([
         name,
         user.habits,

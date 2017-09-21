@@ -29,7 +29,7 @@ server.on('close', () => {
 
 // Start HTTP server.
 const start = (port = ENV.PORT, host = ENV.HOST) => new Promise((resolve, reject) => {
-  server.listen(port, host, err => (
+  server.listen(port, host, (err) => (
     err
       ? reject(err)
       : resolve()
@@ -38,7 +38,7 @@ const start = (port = ENV.PORT, host = ENV.HOST) => new Promise((resolve, reject
 
 // Stop HTTP server.
 const stop = () => new Promise((resolve, reject) => {
-  server.close(err => (
+  server.close((err) => (
     err
       ? reject(err)
       : resolve()

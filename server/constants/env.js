@@ -4,6 +4,7 @@
  * @module server/constants/env
  */
 
+// Get environment variables and set default values.
 const {
   HOST = '0.0.0.0',
   JWT_SECRET = 'sekrit',
