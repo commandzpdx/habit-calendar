@@ -4,9 +4,18 @@
  * @module server/controllers/error
  */
 
+// Interal server error.
+// eslint-disable-next-line no-unused-vars
+const internalServer = (err, req, res, next) => res
+  .status(500)
+  .json({
+    message: 'Internal Server Error',
+    errors: [],
+  });
+
 // Error by error name.
-const errorByName = (err, req, res, next) => {
-  if (err.name !== 'ValidationError') return next();
+const name = (err, req, res, next) => {
+  if (err.name !== 'ValidationError') return next(err);
 
   return res
     .status(400)
@@ -16,9 +25,17 @@ const errorByName = (err, req, res, next) => {
     });
 };
 
+// 404 error.
+// eslint-disable-next-line no-unused-vars
+const notFound = (req, res, next) => res
+  .status(404)
+  .json({
+    message: `Cannot ${req.method} ${req.path}`,
+  });
+
 // Error by status code.
-const errorByCode = (err, req, res, next) => {
-  if (!err.code) return next();
+const status = (err, req, res, next) => {
+  if (!err.code) return next(err);
 
   return res
     .status(err.code)
@@ -28,25 +45,9 @@ const errorByCode = (err, req, res, next) => {
     });
 };
 
-// Interal server error.
-const internalServer = (req, res) => res
-  .status(500)
-  .json({
-    message: 'Internal Server Error',
-    errors: [],
-  });
-
-// 404 error.
-// eslint-disable-next-line no-unused-vars
-const notFound = (req, res, next) => res
-  .status(404)
-  .json({
-    message: `Cannot ${req.method} ${req.path}`,
-  });
-
 module.exports = {
-  errorByName,
-  errorByCode,
   internalServer,
+  name,
   notFound,
+  status,
 };

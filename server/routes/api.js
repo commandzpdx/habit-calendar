@@ -78,8 +78,8 @@ router.route('/users')
 
 // Errors.
 router.use(errorController.notFound);
-router.use(errorController.errorByName);
-router.use(errorController.errorByCode);
+router.use(errorController.name);
+router.use(errorController.status);
 router.use(errorController.internalServer);
 
 module.exports = router;
