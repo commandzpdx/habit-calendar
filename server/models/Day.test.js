@@ -1,12 +1,12 @@
 /**
  * Day Model Test.
  *
- * @module server/tests/models/Day.test
+ * @module server/models/Day.test
  */
 
 const { assert } = require('chai');
 
-const Day = require('../../models/Day');
+const Day = require('./Day');
 
 describe('day model', () => {
   it('example with all required fields', () => {

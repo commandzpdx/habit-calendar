@@ -1,13 +1,13 @@
 /**
  * Error Controller Test.
  *
- * @module server/tests/controllers/error.test
+ * @module server/controllers/error.test
  */
 
 const { assert } = require('chai');
 
-const errorController = require('../../controllers/error');
-const User = require('../../models/User');
+const errorController = require('./error');
+const User = require('../models/User');
 
 describe('handle-errors', () => {
   // Mock up the response object that's returned in handle-errors.js
