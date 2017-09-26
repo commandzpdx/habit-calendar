@@ -1,12 +1,12 @@
 /**
  * Habit Model Test.
  *
- * @module server/tests/models/Habit.test
+ * @module server/models/Habit.test
  */
 
 const { assert } = require('chai');
 
-const Habit = require('../../models/Habit');
+const Habit = require('./Habit');
 
 describe('habit model', () => {
   it('example with all required fields', () => {

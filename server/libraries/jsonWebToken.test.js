@@ -1,12 +1,12 @@
 /**
  * JSON Web Token Library Test.
  *
- * @module server/tests/libraries/jsonWebToken.test
+ * @module server/libraries/jsonWebToken.test
  */
 
 const { assert } = require('chai');
 
-const jwt = require('../../libraries/jsonWebToken');
+const jwt = require('./jsonWebToken');
 
 const payload = {
   _id: '1a2b3c',

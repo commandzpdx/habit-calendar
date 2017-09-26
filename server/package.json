@@ -7,7 +7,7 @@
     "deploy": "now --public && now alias",
     "start": "node index.js",
     "start:watch": "nodemon index.js",
-    "test": "mocha --recursive tests"
+    "test": "mocha --recursive './{,!(node_modules)/**/}*.test.js'"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

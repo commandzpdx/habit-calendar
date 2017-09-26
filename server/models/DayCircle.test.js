@@ -1,12 +1,12 @@
 /**
  * Day Circle Model Test.
  *
- * @module server/tests/models/DayCircle.test
+ * @module server/models/DayCircle.test
  */
 
 const { assert } = require('chai');
 
-const DayCircle = require('../../models/DayCircle');
+const DayCircle = require('./DayCircle');
 
 describe('dayCircle model', () => {
   it('example with all required fields', () => {

@@ -1,12 +1,12 @@
 /**
  * User Model Test.
  *
- * @module server/tests/models/User.test
+ * @module server/models/User.test
  */
 
 const { assert } = require('chai');
 
-const User = require('../../models/User');
+const User = require('./User');
 
 describe('user model', () =>{
   it('example with all required fields', () => {

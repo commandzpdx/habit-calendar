@@ -1,15 +1,15 @@
 /**
- * Users API Test.
+ * API Routes Test.
  *
- * @module server/tests/api/users.test
+ * @module server/routes/api.test
  */
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const ENV = require('../../constants/env');
-const app = require('../../libraries/app');
-const database = require('../../libraries/database');
+const ENV = require('../constants/env');
+const app = require('../libraries/app');
+const database = require('../libraries/database');
 
 const { assert } = chai;
 let request;

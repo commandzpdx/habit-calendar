@@ -1,13 +1,13 @@
 /**
- * Auth Middlewares Test.
+ * Auth Middleware Test.
  *
- * @module server/tests/middlewares/auth.test
+ * @module server/middlewares/auth.test
  */
 
 const { assert } = require('chai');
 
-const jwt = require('../../libraries/jsonWebToken');
-const authMiddlewares = require('../../middlewares/auth');
+const jwt = require('../libraries/jsonWebToken');
+const authMiddlewares = require('./auth');
 
 const ensureAuth = authMiddlewares.ensureAuth();
 
