@@ -7,10 +7,10 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const ENV = require('../constants/env');
-const PATHS = require('../constants/paths');
 const apiRoutes = require('../routes/api');
 const webRoutes = require('../routes/web');
+const ENV = require('../constants/env');
+const PATHS = require('../constants/paths');
 
 // Create express app.
 const app = express();
