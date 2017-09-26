@@ -45,82 +45,140 @@ schema.statics.findDays = function findDays() {
         as: 'day',
       },
     },
+    // Bring back days with a specified habit ID.
+    // Ignore.
+    // {
+    //   $filter: {
+    //     input: '$day',
+    //     as: 'item',
+    //     cond: {
+    //       $eq: ['$$item.habit', '59c4415e4eb32d5ed16179bd'],
+    //     },
+    //   },
+    // },
     // Re-organize day circle properties.
-    {
-      $project: {
-        month: true,
-        dayCircles: {
-          dayId: {
-            $ifNull: [
-              {
-                $arrayElemAt: ['$day._id', 0],
-              },
-              '',
-            ],
-          },
-          _id: '$_id',
-          pathD: '$pathD',
-          textContent: '$textContent',
-          textTransform: '$textTransform',
-          circleFilled: {
-            $ifNull: [
-              {
-                $arrayElemAt: ['$day.circleFilled', 0],
-              },
-              false,
-            ],
-          },
-          year: {
-            $arrayElemAt: ['$day.year', 0],
-          },
-          weekday: {
-            $arrayElemAt: ['$day.weekday', 0],
-          },
-        },
-      },
-    },
+    // {
+    //   $project: {
+    //     month: true,
+    //     dayCircles: {
+    //       dayId: {
+    //         $ifNull: [
+    //           {
+    //             $arrayElemAt: ['$day._id', 0],
+    //           },
+    //           '',
+    //         ],
+    //       },
+    //       _id: '$_id',
+    //       pathD: '$pathD',
+    //       textContent: '$textContent',
+    //       textTransform: '$textTransform',
+    //       circleFilled: {
+    //         $ifNull: [
+    //           {
+    //             $arrayElemAt: ['$day.circleFilled', 0],
+    //           },
+    //           false,
+    //         ],
+    //       },
+    //       year: {
+    //         $arrayElemAt: ['$day.year', 0],
+    //       },
+    //       weekday: {
+    //         $arrayElemAt: ['$day.weekday', 0],
+    //       },
+    //     },
+    //   },
+    // },
+    // Ignore.
+    // {
+    //   $project: {
+    //     month: true,
+    //     day: {
+    //       $ifNull: [
+    //         {
+    //           $filter: {
+    //             input: '$day',
+    //             as: 'item',
+    //             cond: {
+    //               $eq: ['$$item.habit', '597c21a066f2e2cc294a5c98'],
+    //             },
+    //           },
+    //         },
+    //       ],
+    //     },
+    //     dayCircles: {
+    //       _id: '$_id',
+    //       pathD: '$pathD',
+    //       textContent: '$textContent',
+    //       textTransform: '$textTransform',
+    //       dayId: {
+    //         $ifNull: [
+    //           {
+    //             $arrayElemAt: ['$day._id', 0],
+    //           },
+    //           '',
+    //         ],
+    //       },
+    //       circleFilled: {
+    //         $ifNull: [
+    //           {
+    //             $arrayElemAt: ['$day.circleFilled', 0],
+    //           },
+    //           false,
+    //         ],
+    //       },
+    //       year: {
+    //         $arrayElemAt: ['$day.year', 0],
+    //       },
+    //       weekday: {
+    //         $arrayElemAt: ['$day.weekday', 0],
+    //       },
+    //     },
+    //   },
+    // },
     // Group days by month.
-    {
-      $group: {
-        _id: '$month',
-        dayCircles: {
-          $push: '$dayCircles',
-        },
-      },
-    },
+    // {
+    //   $group: {
+    //     _id: '$month',
+    //     dayCircles: {
+    //       $push: '$dayCircles',
+    //     },
+    //   },
+    // },
     // Populate month.
-    {
-      $lookup: {
-        from: 'monthCircles',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'month',
-      },
-    },
+    // {
+    //   $lookup: {
+    //     from: 'monthCircles',
+    //     localField: '_id',
+    //     foreignField: '_id',
+    //     as: 'month',
+    //   },
+    // },
     // Re-organize month properties.
-    {
-      $project: {
-        month: {
-          $arrayElemAt: ['$month.month', 0],
-        },
-        monthPathClassName: {
-          $arrayElemAt: ['$month.monthPathClassName', 0],
-        },
-        monthTextClassName: {
-          $arrayElemAt: ['$month.monthTextClassName', 0],
-        },
-        dayPathClassName: {
-          $arrayElemAt: ['$month.dayPathClassName', 0],
-        },
-        dayTextClassName: {
-          $arrayElemAt: ['$month.dayTextClassName', 0],
-        },
-        monthCircle: {
-          $arrayElemAt: ['$month.monthCircle', 0],
-        },
-        dayCircles: true,
-      },
-    },
+    // {
+    //   $project: {
+    //     month: {
+    //       $arrayElemAt: ['$month.month', 0],
+    //     },
+    //     monthPathClassName: {
+    //       $arrayElemAt: ['$month.monthPathClassName', 0],
+    //     },
+    //     monthTextClassName: {
+    //       $arrayElemAt: ['$month.monthTextClassName', 0],
+    //     },
+    //     dayPathClassName: {
+    //       $arrayElemAt: ['$month.dayPathClassName', 0],
+    //     },
+    //     dayTextClassName: {
+    //       $arrayElemAt: ['$month.dayTextClassName', 0],
+    //     },
+    //     monthCircle: {
+    //       $arrayElemAt: ['$month.monthCircle', 0],
+    //     },
+    //     dayCircles: true,
+    //   },
+    // },
   ]);
 };
 

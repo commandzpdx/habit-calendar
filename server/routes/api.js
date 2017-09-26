@@ -8,73 +8,79 @@ const { Router } = require('express');
 const bodyParser = require('body-parser');
 
 const authController = require('../controllers/auth');
-const userController = require('../controllers/user');
-const monthCircleController = require('../controllers/monthCircle');
-const dayCircleController = require('../controllers/dayCircle');
+const errorController = require('../controllers/error');
 const circleController = require('../controllers/circle');
 const dayController = require('../controllers/day');
+const dayCircleController = require('../controllers/dayCircle');
 const habitController = require('../controllers/habit');
-const errorController = require('../controllers/error');
-const authMiddlewares = require('../middlewares/auth');
+const monthCircleController = require('../controllers/monthCircle');
+const userController = require('../controllers/user');
+const authMiddleware = require('../middlewares/auth');
 
 // Express router for API routes.
 const router = Router();
 
-// Circles.
-router.route('/circles')
-  .get(authMiddlewares.ensureAuth(), circleController.getCircles);
+// JSON parser middleware for converting incoming requests to JS object.
+const jsonParser = bodyParser.json();
 
-// Day circles.
+// Auth middleware to protect route from public access.
+const ensureAuth = authMiddleware.ensureAuth();
+
+// Circle resource routes.
+router.route('/circles')
+  .get(ensureAuth, circleController.getCircles);
+
+// Day circle resource routes.
 router.route('/day-circles')
-  .get(dayCircleController.getDays)
-  .post(bodyParser.json(), dayCircleController.createDays);
+  .get(dayCircleController.getDayCircles)
+  .post(jsonParser, dayCircleController.createDayCircles);
 
 router.route('/day-circles/day')
-  .post(bodyParser.json(), dayCircleController.createDay);
+  .post(jsonParser, dayCircleController.createDayCircle);
 
 router.route('/day-circles/:id')
-  .delete(dayCircleController.deleteDay)
-  .get(dayCircleController.getDay)
-  .put(bodyParser.json(), dayCircleController.updateDay);
+  .delete(dayCircleController.deleteDayCircle)
+  .get(dayCircleController.getDayCircle)
+  .put(jsonParser, dayCircleController.updateDayCircle);
 
-// Days.
+// Day resource routes.
 router.route('/days')
-  .post(authMiddlewares.ensureAuth(), bodyParser.json(), dayController.createFillDay)
-  .put(authMiddlewares.ensureAuth(), bodyParser.json(), dayController.updateFillDay);
+  .post(ensureAuth, jsonParser, dayController.createDay)
+  .put(ensureAuth, jsonParser, dayController.updateDay);
 
-// Habits.
+// Habit resource routes.
 router.route('/habits')
-  .get(authMiddlewares.ensureAuth(), habitController.getHabits)
-  .post(authMiddlewares.ensureAuth(), bodyParser.json(), habitController.createHabit);
+  .get(ensureAuth, habitController.getHabits)
+  .post(ensureAuth, jsonParser, habitController.createHabit);
 
 router.route('/habits/:id')
   // TODO: these PUT and DELETE methods need limitations
   // currently any logged in user can delete or edit all habits
-  .delete(authMiddlewares.ensureAuth(), habitController.deleteHabit)
-  .get(authMiddlewares.ensureAuth(), habitController.getHabit)
-  .put(authMiddlewares.ensureAuth(), bodyParser.json(), habitController.updateHabit);
+  .delete(ensureAuth, habitController.deleteHabit)
+  .get(ensureAuth, habitController.getHabit)
+  .put(ensureAuth, jsonParser, habitController.updateHabit);
 
-// Month circles.
+// Month circle resource routes.
 router.route('/month-circles')
-  .get(monthCircleController.getMonths)
-  .post(bodyParser.json(), monthCircleController.createMonth);
+  .get(monthCircleController.getMonthCircles)
+  .post(jsonParser, monthCircleController.createMonthCircle);
 
 router.route('/month-circles/:id')
-  .delete(monthCircleController.deleteMonth)
-  .get(monthCircleController.getMonth)
-  .put(bodyParser.json(), monthCircleController.updateMonth);
+  .delete(monthCircleController.deleteMonthCircle)
+  .get(monthCircleController.getMonthCircle)
+  .put(jsonParser, monthCircleController.updateMonthCircle);
 
-// User signin.
+// User signin route.
 router.route('/user/signin')
-  .post(bodyParser.json(), authController.signin);
+  .post(jsonParser, authController.signin);
 
 // User token verification.
 router.route('/user/token')
-  .get(authMiddlewares.ensureAuth(), authController.token);
+  .get(ensureAuth, authController.token);
 
-// User signup.
+// User resource routes.
 router.route('/users')
-  .post(bodyParser.json(), userController.signup);
+  .post(jsonParser, userController.signup);
 
 // Errors.
 router.use(errorController.notFound);

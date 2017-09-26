@@ -1,5 +1,5 @@
 /**
- * Auth Middlewares.
+ * Auth Middleware.
  *
  * @module server/middlewares/auth
  */
