@@ -12,20 +12,14 @@ const createHabit = (req, res, next) => new Habit(req.body)
   .then((habit) => Promise.all([
     habit,
     // Push the newly saved habit to the user's habit array.
-    User.findByIdAndUpdate(req.user._id, {
-      $push: {
-        habits: habit._id,
-      },
-    }),
+    User.findByIdAndUpdate(req.user._id, { $push: { habits: habit._id } }),
   ]))
   .then(([habit]) => res.json(habit))
   .catch(next);
 
 const deleteHabit = (req, res, next) => Habit
   .findByIdAndRemove(req.params.id)
-  .then(() => res.json({
-    message: 'the habit was deleted',
-  }))
+  .then(() => res.json({ message: 'the habit was deleted' }))
   .catch(next);
 
 const getHabit = (req, res, next) => Habit

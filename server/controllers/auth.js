@@ -4,6 +4,7 @@
  * @module server/controllers/auth
  */
 
+const { newError } = require('../libraries/error')
 const jwt = require('../libraries/jsonWebToken');
 const User = require('../models/User');
 
@@ -20,11 +21,10 @@ const signin = (req, res, next) => {
     .then((user) => {
       // User or email/password combination doesn't exist, return error
       if (!user || !user.comparePassword(payload.password)) {
-        const newError = new Error('The provided email and/or password is invalid.');
-
-        newError.code = 400;
-
-        throw newError;
+        throw newError({
+          code: 400,
+          message: 'The provided email and/or password is invalid.',
+        });
       }
 
       return user;
@@ -60,9 +60,7 @@ const signin = (req, res, next) => {
 
 const token = (req, res) => res
   .status(200)
-  .json({
-    message: 'The provided token is valid.',
-  });
+  .json({ message: 'The provided token is valid.' });
 
 module.exports = {
   signin,

@@ -29,9 +29,7 @@ const name = (err, req, res, next) => {
 // eslint-disable-next-line no-unused-vars
 const notFound = (req, res, next) => res
   .status(404)
-  .json({
-    message: `Cannot ${req.method} ${req.path}`,
-  });
+  .json({ message: `Cannot ${req.method} ${req.path}` });
 
 // Error by status code.
 const status = (err, req, res, next) => {

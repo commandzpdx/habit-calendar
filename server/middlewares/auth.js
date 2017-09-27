@@ -4,6 +4,7 @@
  * @module server/middlewares/auth
  */
 
+const { newError } = require('../libraries/error');
 const jwt = require('../libraries/jsonWebToken');
 
 // Check if JSON web token is valid or not.
@@ -11,13 +12,13 @@ const ensureAuth = () => (req, res, next) => {
   const authorization = req.get('Authorization') || '';
   const [bearer, token] = authorization.split(' ');
 
-  const newError = new Error('Unauthorized');
-  newError.code = 401;
+  const error = newError({
+    code: 401,
+    message: 'Unauthorized',
+  });
 
   // No Authorization header or "Bearer" isn't in the header
-  if (bearer !== 'Bearer' || !token) {
-    throw newError;
-  }
+  if (bearer !== 'Bearer' || !token) throw error;
 
   return jwt
     .verify(token)
@@ -27,10 +28,8 @@ const ensureAuth = () => (req, res, next) => {
 
       next();
     })
-    .catch(() => {
-      // Token is invalid, set response to 401
-      throw newError;
-    });
+    // Token is invalid, set response to 401
+    .catch(() => { throw error; });
 };
 
 module.exports = {
