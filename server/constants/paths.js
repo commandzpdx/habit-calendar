@@ -7,12 +7,12 @@
 const path = require('path');
 
 // Define file paths.
-const ROOT = path.resolve(__dirname, '..');
-const PUBLIC = `${ROOT}/public`;
-const INDEX = `${ROOT}/public/index.html`;
+const SERVER = path.resolve(__dirname, '..');
+const PUBLIC = `${SERVER}/public`;
+const INDEX = `${SERVER}/public/index.html`;
 
 module.exports = {
   INDEX,
   PUBLIC,
-  ROOT,
+  SERVER,
 };
