@@ -17,9 +17,7 @@ const createDayCircles = (req, res, next) => DayCircle.insertMany(req.body)
 
 const deleteDayCircle = (req, res, next) => DayCircle
   .findByIdAndRemove(req.params.id)
-  .then(() => res.json({
-    message: 'Day was deleted',
-  }))
+  .then(() => res.json({ message: 'Day was deleted' }))
   .catch(next);
 
 const getDayCircle = (req, res, next) => DayCircle

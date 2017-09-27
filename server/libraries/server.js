@@ -4,13 +4,13 @@
  * @module server/libraries/server
  */
 
-const http = require('http');
+const { createServer } = require('http');
 
 const app = require('./app');
 const ENV = require('../constants/env');
 
 // Create HTTP server.
-const server = http.createServer(app);
+const server = createServer(app);
 
 // Cache server address info.
 let address;

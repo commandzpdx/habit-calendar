@@ -23,9 +23,7 @@ const getMonthCircles = (req, res, next) => MonthCircle
 
 const deleteMonthCircle = (req, res, next) => MonthCircle
   .findByIdAndRemove(req.params.id)
-  .then(() => res.json({
-    message: 'Month was deleted',
-  }))
+  .then(() => res.json({ message: 'Month was deleted' }))
   .catch(next);
 
 const updateMonthCircle = (req, res, next) => MonthCircle

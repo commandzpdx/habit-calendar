@@ -19,16 +19,12 @@ const app = express();
 app.use(morgan(ENV.NODE === 'production' ? 'common' : 'dev'));
 
 // Serve static files.
-if (ENV.NODE === 'production') {
-  app.use(express.static(PATHS.PUBLIC));
-}
+if (ENV.NODE === 'production') app.use(express.static(PATHS.PUBLIC));
 
 // API routes.
 app.use('/api', apiRoutes);
 
 // Web page routes.
-if (ENV.NODE === 'production') {
-  app.use('/', webRoutes);
-}
+if (ENV.NODE === 'production') app.use('/', webRoutes);
 
 module.exports = app;

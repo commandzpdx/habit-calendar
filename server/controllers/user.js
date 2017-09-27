@@ -4,6 +4,7 @@
  * @module server/controllers/user
  */
 
+const { newError } = require('../libraries/error');
 const jwt = require('../libraries/jsonWebToken');
 const User = require('../models/User');
 
@@ -15,12 +16,11 @@ const signup = (req, res, next) => {
     .count()
     .then((count) => {
       if (count > 0) {
-        const badEmail = new Error(`${data.email} already has an account. Please signup with a different email.`);
-
-        badEmail.name = 'email already exists';
-        badEmail.code = 400;
-
-        throw badEmail;
+        throw newError({
+          code: 400,
+          message: `${data.email} already has an account. Please signup with a different email.`,
+          name: 'email already exists',
+        });
       }
 
       return new User(data).save();
