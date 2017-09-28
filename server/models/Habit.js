@@ -9,37 +9,38 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const { Schema } = mongoose;
+const { Types } = Schema;
 
 const schema = new Schema({
   habit: {
-    type: String,
+    type: Types.String,
     trim: true,
   },
   category: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   startDate: {
-    type: Date,
+    type: Types.Date,
     default: Date.now,
     required: true,
   },
   longestStreak: {
-    type: Number,
+    type: Types.Number,
   },
   currentStreak: {
-    type: Number,
+    type: Types.Number,
   },
   color: {
-    type: String,
+    type: Types.String,
     trim: true,
   },
   notifications: {
-    type: Boolean,
+    type: Types.Boolean,
   },
   notificationInterval: {
-    type: Number,
+    type: Types.Number,
   },
 }, {
   collection: 'habits',

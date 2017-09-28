@@ -1,67 +1,65 @@
 import React, { Component } from 'react';
-import spiralSVG from '../assets/spiral_progress.svg';
-import './SpiralCal.css';
 import classNames from 'classnames';
+import './SpiralCal.css';
 
 export default class SpiralCal extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       circles: [],
     };
-    this.clickDayCircle = this.clickDayCircle.bind(this);
-    this.saveClick = this.saveClick.bind(this);
-    this.updateFill = this.updateFill.bind(this);
+
+    this.onClickDayCircle = this.onClickDayCircle.bind(this);
+    this.createDay = this.createDay.bind(this);
+    this.updateDay = this.updateDay.bind(this);
   }
 
   componentDidMount() {
-    fetch('/api/circles', {
+    fetch(`/api/day-circles?habitId=${this.props.habitID}`, {
       headers: {
         Authorization: `Bearer ${this.props.token}`,
         'Content-Type': 'application/json',
       },
     })
-      .then(res => res.json())
-      .then(circles => this.setState({ circles }));
+      .then((res) => res.json())
+      .then((circles) => this.setState({ circles }));
   }
 
-  clickDayCircle(monthIndex, dayIndex) {
-    const currentState = [...this.state.circles];
-    const month = currentState[monthIndex].month;
-    let day = currentState[monthIndex].dayCircles[dayIndex].textContent;
-    const year = new Date().getFullYear();
-    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const date = new Date(`${month} ${day}, ${year}`);
-    const weekday = weekdays[date.getDay()];
+  onClickDayCircle(event) {
+    const { monthCircleIndex, dayCircleIndex } = event.target.parentNode.dataset;
+    const circles = [...this.state.circles];
+    const dayId = circles[monthCircleIndex].dayCircles[dayCircleIndex].day._id;
 
-    currentState[monthIndex].dayCircles[dayIndex].circleFilled = !currentState[monthIndex].dayCircles[dayIndex].circleFilled;
-    console.log(currentState[monthIndex].dayCircles[dayIndex]._id)
-    if (currentState[monthIndex].dayCircles[dayIndex].dayId) {  
-      this.updateFill(currentState[monthIndex].dayCircles[dayIndex].dayId, currentState[monthIndex].dayCircles[dayIndex].circleFilled)
-        .then(() => {
-          this.setState({
-            circles: currentState,
-          });
+    if (dayId) {
+      const isFilled = !circles[monthCircleIndex].dayCircles[dayCircleIndex].day.isFilled;
+
+      this.updateDay(dayId, isFilled)
+        .then((day) => {
+          circles[monthCircleIndex].dayCircles[dayCircleIndex].day.isFilled = day.isFilled;
+
+          this.setState({ circles });
         });
     } else {
-      this.saveClick(
-          currentState[monthIndex].dayCircles[dayIndex].circleFilled,
-          year,
-          weekday,
-          currentState[monthIndex].dayCircles[dayIndex]._id,
-          this.props.habitID,
-        )
-        .then((json) => {
-          currentState[monthIndex].dayCircles[dayIndex]._id = json._id;
-          this.setState({
-            circles: currentState,
-          });
+      const { month } = circles[monthCircleIndex];
+      const {
+        _id: dayCircleId,
+        textContent: day,
+      } = circles[monthCircleIndex].dayCircles[dayCircleIndex];
+      const year = new Date().getFullYear();
+      const date = new Date(`${month} ${day}, ${year}`);
+      const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()];
+
+      this.createDay(year, weekday, dayCircleId, this.props.habitID)
+        .then((day) => {
+          circles[monthCircleIndex].dayCircles[dayCircleIndex].day = day;
+
+          this.setState({ circles });
         });
     }
   }
 
-  saveClick(circleFilled, year, weekday, dayCircle, habit) {
-    // token check?
+  createDay(year, weekday, dayCircle, habit) {
     return fetch('/api/days', {
       headers: {
         Authorization: `Bearer ${this.props.token}`,
@@ -69,58 +67,68 @@ export default class SpiralCal extends Component {
       },
       method: 'POST',
       body: JSON.stringify({
-        circleFilled,
+        isFilled: true,
         year,
         weekday,
         dayCircle,
         habit,
       }),
     })
-    .then(res => res.json());
+      .then((res) => res.json());
   }
 
-  updateFill( id, circleFilled) {
-    return fetch('/api/days', {
+  updateDay(id, isFilled) {
+    return fetch(`/api/days/${id}`, {
       headers: {
         Authorization: `Bearer ${this.props.token}`,
         'Content-Type': 'application/json',
       },
       method: 'PUT',
-      body: JSON.stringify({
-        id,
-        circleFilled,
-      }),
+      body: JSON.stringify({ isFilled }),
     })
-    .then(res => res.json());
+      .then((res) => res.json());
   }
 
   render() {
     return (
-      <svg viewBox="-196 -8 565.5 576" style={{ enableBackground: 'new -196 -8 565.5 576' }}>
-        {this.state.circles.map((m, mIndex) => {
-          return (
-            <g key={m._id}>
-              <g>
-                <path className={m.monthPathClassName} d={m.monthCircle.pathD} />
-                <text transform={m.monthCircle.textTransform} className={m.monthTextClassName}>{m.monthCircle.textContent}</text>
-              </g>
-              {m.dayCircles.map((d, dIndex) => {
-                return (
-                  <g key={d._id} onClick={() => this.clickDayCircle(mIndex, dIndex)}>
-                    <path
-                      className={classNames({
-                        [m.dayPathClassName]: true,
-                        filled: d.circleFilled,
-                      })}
-                      d={d.pathD}
-                    />
-                    <text transform={d.textTransform} className={m.dayTextClassName} >{d.textContent}</text>
-                  </g>
-                );
-              })}
+      <svg
+        style={{ enableBackground: 'new -196 -8 565.5 576' }}
+        viewBox="-196 -8 565.5 576"
+      >
+        {this.state.circles.map((m, mIndex) => (
+          <g key={m._id}>
+            <g>
+              <path
+                className={m.monthPathClassName}
+                d={m.monthCircle.pathD}
+              />
+              <text
+                className={m.monthTextClassName}
+                transform={m.monthCircle.textTransform}
+              >{m.monthCircle.textContent}</text>
             </g>
-          );
-        })}
+            {m.dayCircles.map((d, dIndex) => (
+              <g
+                data-day-circle-index={dIndex}
+                data-month-circle-index={mIndex}
+                key={d._id}
+                onClick={this.onClickDayCircle}
+              >
+                <path
+                  className={classNames({
+                    [m.dayPathClassName]: true,
+                    filled: d.day.isFilled,
+                  })}
+                  d={d.pathD}
+                />
+                <text
+                  className={m.dayTextClassName}
+                  transform={d.textTransform}
+                >{d.textContent}</text>
+              </g>
+            ))}
+          </g>
+        ))}
       </svg>
     );
   }
