@@ -25,8 +25,11 @@ const getDayCircle = (req, res, next) => DayCircle
   .then((day) => res.json(day))
   .catch(next);
 
-const getDayCircles = (req, res, next) => DayCircle
-  .find()
+const getDayCircles = (req, res, next) => (
+  req.query.habitId
+    ? DayCircle.findWithDay(req.query.habitId)
+    : DayCircle.find()
+)
   .then((days) => res.json(days))
   .catch(next);
 

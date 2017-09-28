@@ -9,20 +9,21 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const { Schema } = mongoose;
+const { ObjectId } = mongoose.mongo;
 const { Types } = Schema;
 
 const schema = new Schema({
   pathD: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   textContent: {
-    type: Number,
+    type: Types.Number,
     required: true,
   },
   textTransform: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
@@ -34,7 +35,7 @@ const schema = new Schema({
   collection: 'dayCircles',
 });
 
-schema.statics.findDays = function findDays() {
+schema.statics.findWithDay = function findWithDay(habitId) {
   return this.aggregate([
     // Join any existing day from days collection into dayCircle.
     {
@@ -42,107 +43,66 @@ schema.statics.findDays = function findDays() {
         from: 'days',
         localField: '_id',
         foreignField: 'dayCircle',
-        as: 'day',
+        as: 'days',
       },
     },
-    // Bring back days with a specified habit ID.
-    // Ignore.
-    // {
-    //   $filter: {
-    //     input: '$day',
-    //     as: 'item',
-    //     cond: {
-    //       $eq: ['$$item.habit', '59c4415e4eb32d5ed16179bd'],
-    //     },
-    //   },
-    // },
     // Re-organize day circle properties.
     {
       $project: {
         month: true,
-        dayCircles: {
-          dayId: {
-            $ifNull: [
-              {
-                $arrayElemAt: ['$day._id', 0],
-              },
-              '',
-            ],
-          },
+        dayCircle: {
           _id: '$_id',
           pathD: '$pathD',
           textContent: '$textContent',
           textTransform: '$textTransform',
-          circleFilled: {
-            $ifNull: [
-              {
-                $arrayElemAt: ['$day.circleFilled', 0],
+          day: {
+            $let: {
+              vars: {
+                firstDay: {
+                  $arrayElemAt: [
+                    // Bring back day with a specified habit ID.
+                    {
+                      $filter: {
+                        input: '$days',
+                        as: 'day',
+                        cond: {
+                          $eq: ['$$day.habit', ObjectId(habitId)],
+                        },
+                      },
+                    },
+                    // Get the first item from filtered array. Only one should exist.
+                    0,
+                  ],
+                },
               },
-              false,
-            ],
-          },
-          year: {
-            $arrayElemAt: ['$day.year', 0],
-          },
-          weekday: {
-            $arrayElemAt: ['$day.weekday', 0],
+              in: {
+                $cond: {
+                  if: '$$firstDay',
+                  then: {
+                    _id: '$$firstDay._id',
+                    isFilled: '$$firstDay.isFilled',
+                    year: '$firstDay.year',
+                    weekday: '$$firstDay.weekday',
+                  },
+                  else: {
+                    _id: '',
+                    isFilled: '',
+                    year: '',
+                    weekday: '',
+                  },
+                },
+              },
+            },
           },
         },
       },
     },
-    // Ignore.
-    // {
-    //   $project: {
-    //     month: true,
-    //     day: {
-    //       $ifNull: [
-    //         {
-    //           $filter: {
-    //             input: '$day',
-    //             as: 'item',
-    //             cond: {
-    //               $eq: ['$$item.habit', '597c21a066f2e2cc294a5c98'],
-    //             },
-    //           },
-    //         },
-    //       ],
-    //     },
-    //     dayCircles: {
-    //       _id: '$_id',
-    //       pathD: '$pathD',
-    //       textContent: '$textContent',
-    //       textTransform: '$textTransform',
-    //       dayId: {
-    //         $ifNull: [
-    //           {
-    //             $arrayElemAt: ['$day._id', 0],
-    //           },
-    //           '',
-    //         ],
-    //       },
-    //       circleFilled: {
-    //         $ifNull: [
-    //           {
-    //             $arrayElemAt: ['$day.circleFilled', 0],
-    //           },
-    //           false,
-    //         ],
-    //       },
-    //       year: {
-    //         $arrayElemAt: ['$day.year', 0],
-    //       },
-    //       weekday: {
-    //         $arrayElemAt: ['$day.weekday', 0],
-    //       },
-    //     },
-    //   },
-    // },
     // Group days by month.
     {
       $group: {
         _id: '$month',
         dayCircles: {
-          $push: '$dayCircles',
+          $push: '$dayCircle',
         },
       },
     },

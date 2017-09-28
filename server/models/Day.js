@@ -12,16 +12,16 @@ const { Schema } = mongoose;
 const { Types } = Schema;
 
 const schema = new Schema({
-  circleFilled: {
-    type: Boolean,
+  isFilled: {
+    type: Types.Boolean,
     required: true,
   },
   year: {
-    type: Number,
+    type: Types.Number,
     required: true,
   },
   weekday: {
-    type: String,
+    type: Types.String,
     trim: true,
   },
   dayCircle: {

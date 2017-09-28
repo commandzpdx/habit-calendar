@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 
 const authController = require('../controllers/auth');
 const errorController = require('../controllers/error');
-const circleController = require('../controllers/circle');
 const dayController = require('../controllers/day');
 const dayCircleController = require('../controllers/dayCircle');
 const habitController = require('../controllers/habit');
@@ -26,10 +25,6 @@ const jsonParser = bodyParser.json();
 // Auth middleware to protect route from public access.
 const ensureAuth = authMiddleware.ensureAuth();
 
-// Circle resource routes.
-router.route('/circles')
-  .get(ensureAuth, circleController.getCircles);
-
 // Day circle resource routes.
 router.route('/day-circles')
   .get(dayCircleController.getDayCircles)
@@ -45,7 +40,9 @@ router.route('/day-circles/:id')
 
 // Day resource routes.
 router.route('/days')
-  .post(ensureAuth, jsonParser, dayController.createDay)
+  .post(ensureAuth, jsonParser, dayController.createDay);
+
+router.route('/days/:id')
   .put(ensureAuth, jsonParser, dayController.updateDay);
 
 // Habit resource routes.
