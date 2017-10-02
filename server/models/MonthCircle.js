@@ -1,48 +1,55 @@
+/**
+ * Month Circle Model.
+ *
+ * @module server/models/MonthCircle
+ */
+
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
 const { Schema } = mongoose;
+const { Types } = Schema;
 
 const schema = new Schema({
   month: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   monthPathClassName: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   monthTextClassName: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   dayPathClassName: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   dayTextClassName: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   monthCircle: {
     pathD: {
-      type: String,
+      type: Types.String,
       trim: true,
       required: true,
     },
     textContent: {
-      type: String,
+      type: Types.String,
       trim: true,
       required: true,
     },
     textTransform: {
-      type: String,
+      type: Types.String,
       trim: true,
       required: true,
     },

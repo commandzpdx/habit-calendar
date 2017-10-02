@@ -1,9 +1,13 @@
-const { indexHtml } = require('../config/paths');
+/**
+ * Static Controller.
+ *
+ * @module server/controllers/static
+ */
 
-const staticController = {
-  index(req, res) {
-    return res.sendFile(indexHtml);
-  },
+const PATHS = require('../constants/paths');
+
+const index = (req, res) => res.sendFile(PATHS.INDEX);
+
+module.exports = {
+  index,
 };
-
-module.exports = staticController;

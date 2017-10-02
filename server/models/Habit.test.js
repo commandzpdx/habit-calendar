@@ -1,6 +1,12 @@
-const assert = require('chai').assert;
+/**
+ * Habit Model Test.
+ *
+ * @module server/models/Habit.test
+ */
 
-const Habit = require('../../models/habit');
+const { assert } = require('chai');
+
+const Habit = require('./Habit');
 
 describe('habit model', () => {
   it('example with all required fields', () => {
@@ -15,10 +21,10 @@ describe('habit model', () => {
       startDate: new Date(),
     });
     return habit1.validate()
-    .then(
-      () => { throw new Error('validation should not succeed'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not succeed'); },
+        err => assert.isNotNull(err),
+      );
   });
 
   it('requires startDate (invalid with no startDate)', () => {
@@ -26,10 +32,9 @@ describe('habit model', () => {
       category: 'asdf',
     });
     return habit2.validate()
-    .then(
-      () => { throw new Error('validation should not succeed'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not succeed'); },
+        err => assert.isNotNull(err),
+      );
   });
-
 });

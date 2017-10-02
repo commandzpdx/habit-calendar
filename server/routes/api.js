@@ -1,80 +1,88 @@
+/**
+ * API Routes.
+ *
+ * @module server/routes/api
+ */
+
 const { Router } = require('express');
 const bodyParser = require('body-parser');
 
 const authController = require('../controllers/auth');
-const userController = require('../controllers/user');
-const monthCircleController = require('../controllers/monthCircle');
-const dayCircleController = require('../controllers/dayCircle');
-const circleController = require('../controllers/circle');
-const dayController = require('../controllers/day');
-const habitController = require('../controllers/habit');
 const errorController = require('../controllers/error');
-const { ensureAuth } = require('../middlewares/auth');
+const dayController = require('../controllers/day');
+const dayCircleController = require('../controllers/dayCircle');
+const habitController = require('../controllers/habit');
+const monthCircleController = require('../controllers/monthCircle');
+const userController = require('../controllers/user');
+const authMiddleware = require('../middlewares/auth');
 
-// Express router for API
-const apiRouter = Router();
+// Express router for API routes.
+const router = Router();
 
-// User signin
-apiRouter.post('/user/signin', bodyParser.json(), authController.signin);
+// JSON parser middleware for converting incoming requests to JS object.
+const jsonParser = bodyParser.json();
 
-// User token verification
-apiRouter.get('/user/token', ensureAuth(), authController.token);
+// Auth middleware to protect route from public access.
+const ensureAuth = authMiddleware.ensureAuth();
 
-// User signup
-apiRouter.post('/users', bodyParser.json(), userController.signup);
+// Day circle resource routes.
+router.route('/day-circles')
+  .get(dayCircleController.getDayCircles)
+  .post(jsonParser, dayCircleController.createDayCircles);
 
-// MonthCircle CRUD
-apiRouter.post('/month-circles', bodyParser.json(), monthCircleController.createMonth);
+router.route('/day-circles/day')
+  .post(jsonParser, dayCircleController.createDayCircle);
 
-apiRouter.get('/month-circles', monthCircleController.getMonths);
+router.route('/day-circles/:id')
+  .delete(dayCircleController.deleteDayCircle)
+  .get(dayCircleController.getDayCircle)
+  .put(jsonParser, dayCircleController.updateDayCircle);
 
-apiRouter.get('/month-circles/:id', monthCircleController.getMonth);
+// Day resource routes.
+router.route('/days')
+  .post(ensureAuth, jsonParser, dayController.createDay);
 
-apiRouter.delete('/month-circles/:id', monthCircleController.deleteMonth);
+router.route('/days/:id')
+  .put(ensureAuth, jsonParser, dayController.updateDay);
 
-apiRouter.put('/month-circles/:id', bodyParser.json(), monthCircleController.updateMonth);
+// Habit resource routes.
+router.route('/habits')
+  .get(ensureAuth, habitController.getHabits)
+  .post(ensureAuth, jsonParser, habitController.createHabit);
 
-// DayCircle CRUD
+router.route('/habits/:id')
+  // TODO: these PUT and DELETE methods need limitations
+  // currently any logged in user can delete or edit all habits
+  .delete(ensureAuth, habitController.deleteHabit)
+  .get(ensureAuth, habitController.getHabit)
+  .put(ensureAuth, jsonParser, habitController.updateHabit);
 
-apiRouter.post('/day-circles', bodyParser.json(), dayCircleController.createDays);
+// Month circle resource routes.
+router.route('/month-circles')
+  .get(monthCircleController.getMonthCircles)
+  .post(jsonParser, monthCircleController.createMonthCircle);
 
-apiRouter.post('/day-circles/day', bodyParser.json(), dayCircleController.createDay);
+router.route('/month-circles/:id')
+  .delete(monthCircleController.deleteMonthCircle)
+  .get(monthCircleController.getMonthCircle)
+  .put(jsonParser, monthCircleController.updateMonthCircle);
 
-apiRouter.get('/day-circles', dayCircleController.getDays);
+// User signin route.
+router.route('/user/signin')
+  .post(jsonParser, authController.signin);
 
-apiRouter.get('/day-circles/:id', dayCircleController.getDay);
+// User token verification.
+router.route('/user/token')
+  .get(ensureAuth, authController.token);
 
-apiRouter.delete('/day-circles/:id', dayCircleController.deleteDay);
+// User resource routes.
+router.route('/users')
+  .post(jsonParser, userController.signup);
 
-apiRouter.put('/day-circles/:id', bodyParser.json(), dayCircleController.updateDay);
+// Errors.
+router.use(errorController.notFound);
+router.use(errorController.name);
+router.use(errorController.status);
+router.use(errorController.internalServer);
 
-// Habit CRUD
-
-apiRouter.post('/habits', ensureAuth(), bodyParser.json(), habitController.postHabit);
-
-apiRouter.get('/habits/:id', ensureAuth(), habitController.getHabit);
-
-apiRouter.get('/habits', ensureAuth(), habitController.getAllHabits);
-
-/** TODO: these PUT and DELETE methods need limitations **/
-/** currently any logged in user can delete or edit all habits **/
-apiRouter.put('/habits/:id', ensureAuth(), bodyParser.json(), habitController.updateHabit);
-apiRouter.delete('/habits/:id', ensureAuth(), habitController.deleteHabit);
-
-// Circles
-
-apiRouter.get('/circles', circleController.getCircles);
-
-// Days
-
-apiRouter.post('/days', bodyParser.json(), dayController.saveFillDay);
-
-apiRouter.put('/days', bodyParser.json(), dayController.updateFillDay);
-
-// Errors
-apiRouter.use(errorController.notFound);
-apiRouter.use(errorController.errorByName);
-apiRouter.use(errorController.errorByCode);
-apiRouter.use(errorController.internalServer);
-
-module.exports = apiRouter;
+module.exports = router;

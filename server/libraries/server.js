@@ -1,36 +1,47 @@
-const http = require('http');
+/**
+ * Server Library.
+ *
+ * @module server/libraries/server
+ */
+
+const { createServer } = require('http');
 
 const app = require('./app');
-const { PORT } = require('../config/constants');
+const ENV = require('../constants/env');
 
 // Create HTTP server.
-const server = http.createServer(app);
+const server = createServer(app);
+
+// Cache server address info.
+let address;
 
 // Log message when server starts.
 server.on('listening', () => {
-  console.log(`server running at port ${PORT}`);
+  address = server.address();
+
+  console.log(`Server running at port ${address.port}`);
 });
 
 // Log message when server stops.
 server.on('close', () => {
-  console.log(`server stopped at port ${PORT}`);
+  console.log(`Server stopped at port ${address.port}`);
 });
 
 // Start HTTP server.
-const start = (port = PORT) => new Promise((resolve, reject) => {
-  server.listen(port, err => (
+const start = (port = ENV.PORT, host = ENV.HOST) => new Promise((resolve, reject) => {
+  server.listen(port, host, (err) => (
     err
-    ? reject(err)
-    : resolve()
+      ? reject(err)
+      : resolve()
   ));
 });
 
 // Stop HTTP server.
 const stop = () => new Promise((resolve, reject) => {
-  server.close(err => (
+  server.close((err) => (
     err
-    ? reject(err)
-    : resolve()
+      ? reject(err)
+      : resolve()
   ));
 });
 

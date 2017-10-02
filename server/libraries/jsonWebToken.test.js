@@ -1,6 +1,12 @@
+/**
+ * JSON Web Token Library Test.
+ *
+ * @module server/libraries/jsonWebToken.test
+ */
+
 const { assert } = require('chai');
 
-const jwt = require('../../libraries/jsonWebToken');
+const jwt = require('./jsonWebToken');
 
 const payload = {
   _id: '1a2b3c',
@@ -9,7 +15,6 @@ const payload = {
 let token;
 
 describe('JSON Web Token Library', () => {
-
   it('Should fail signing token because no payload provided', () => {
     return jwt
       .sign()
@@ -54,5 +59,4 @@ describe('JSON Web Token Library', () => {
         assert.equal(decodedPayload._id, payload._id);
       });
   });
-
 });

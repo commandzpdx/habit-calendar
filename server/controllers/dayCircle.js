@@ -1,57 +1,48 @@
-const DayCircle = require('../models/dayCircle');
+/**
+ * Day Circle Controller.
+ *
+ * @module server/controllers/dayCircle
+ */
 
-const dayCircleController = {
-  createDays(req, res, next) {
-    const data = req.body;
+const DayCircle = require('../models/DayCircle');
 
-    return DayCircle.insertMany(data)
-      .then((days) => {
-        return res.json(days);
-      })
-      .catch(next);
-  },
+const createDayCircle = (req, res, next) => new DayCircle(req.body)
+  .save()
+  .then((day) => res.json(day))
+  .catch(next);
 
-  createDay(req, res, next) {
-    const data = req.body;
+const createDayCircles = (req, res, next) => DayCircle.insertMany(req.body)
+  .then((days) => res.json(days))
+  .catch(next);
 
-    return new DayCircle(data).save()
-      .then((day) => {
-        return res.json(day);
-      })
-      .catch(next);
-  },
+const deleteDayCircle = (req, res, next) => DayCircle
+  .findByIdAndRemove(req.params.id)
+  .then(() => res.json({ message: 'Day was deleted' }))
+  .catch(next);
 
-  getDays(req, res, next) {
-    return DayCircle.find()
-    .then((days) => {
-      return res.json(days);
-    })
-    .catch(next);
-  },
+const getDayCircle = (req, res, next) => DayCircle
+  .findById(req.params.id)
+  .then((day) => res.json(day))
+  .catch(next);
 
-  getDay(req, res, next) {
-    return DayCircle.findById(req.params.id)
-    .then((day) => {
-      return res.json(day);
-    })
-    .catch(next);
-  },
+const getDayCircles = (req, res, next) => (
+  req.query.habitId
+    ? DayCircle.findWithDay(req.query.habitId)
+    : DayCircle.find()
+)
+  .then((days) => res.json(days))
+  .catch(next);
 
-  deleteDay(req, res, next) {
-    return DayCircle.findByIdAndRemove(req.params.id)
-    .then(() => {
-      return res.json({ message: 'Day was deleted' });
-    })
-    .catch(next);
-  },
+const updateDayCircle = (req, res, next) => DayCircle
+  .findByIdAndUpdate(req.params.id, req.body, { new: true })
+  .then((updatedDay) => res.json(updatedDay))
+  .catch(next);
 
-  updateDay(req, res, next) {
-    return DayCircle.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((updatedDay) => {
-      return res.json(updatedDay);
-    })
-    .catch(next);
-  },
+module.exports = {
+  createDayCircle,
+  createDayCircles,
+  deleteDayCircle,
+  getDayCircle,
+  getDayCircles,
+  updateDayCircle,
 };
-
-module.exports = dayCircleController;

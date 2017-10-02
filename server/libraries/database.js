@@ -1,6 +1,12 @@
+/**
+ * Database Library.
+ *
+ * @module server/libraries/database
+ */
+
 const mongoose = require('mongoose');
 
-const { MONGODB_URI } = require('../config/constants');
+const ENV = require('../constants/env');
 
 mongoose.Promise = global.Promise;
 
@@ -20,7 +26,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 // Connect to MongoDB.
-const connect = (uri = MONGODB_URI) => mongoose.connect(uri);
+const connect = (uri = ENV.MONGODB_URI) => mongoose.connect(uri, { useMongoClient: true });
 
 // Disconnect from MongoDB.
 const disconnect = () => mongoose.connection.close();

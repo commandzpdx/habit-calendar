@@ -1,48 +1,37 @@
-const jwt = require('../libraries/jsonWebToken');
-
 /**
- * Auth Middlewares.
+ * Auth Middleware.
  *
- * @namespace authMiddlewares
+ * @module server/middlewares/auth
  */
 
-const authMiddlewares = {
+const { newError } = require('../libraries/error');
+const jwt = require('../libraries/jsonWebToken');
 
-  /**
-   * Check if JSON web token is valid or not.
-   */
+// Check if JSON web token is valid or not.
+const ensureAuth = () => (req, res, next) => {
+  const authorization = req.get('Authorization') || '';
+  const [bearer, token] = authorization.split(' ');
 
-  ensureAuth() {
-    return (req, res, next) => {
-      const authHeader = req.get('Authorization');
-      const unauthorized = {
-        code: 401,
-        message: 'Unauthorized',
-      };
+  const error = newError({
+    code: 401,
+    message: 'Unauthorized',
+  });
 
-      // No Authorization header or "Bearer" isn't in the header
-      if (!authHeader || authHeader.substr(0, 6) !== 'Bearer') {
-        return next(unauthorized);
-      }
+  // No Authorization header or "Bearer" isn't in the header
+  if (bearer !== 'Bearer' || !token) throw error;
 
-      // Token starts after the word Bearer and a space
-      const token = authHeader.slice(7);
+  return jwt
+    .verify(token)
+    .then((payload) => {
+      // Payload will be available in the req object
+      req.user = payload;
 
-      return jwt
-        .verify(token)
-        .then((payload) => {
-          // Payload will be available in the req object
-          req.user = payload;
-
-          next();
-        })
-        .catch(() => {
-          // Token is invalid, set response to 401
-          next(unauthorized);
-        });
-    };
-  },
-
+      next();
+    })
+    // Token is invalid, set response to 401
+    .catch(() => { throw error; });
 };
 
-module.exports = authMiddlewares;
+module.exports = {
+  ensureAuth,
+};

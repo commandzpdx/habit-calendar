@@ -1,3 +1,9 @@
+/**
+ * User Model.
+ *
+ * @module server/models/User
+ */
+
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
@@ -8,23 +14,23 @@ const { Types } = Schema;
 
 const schema = new Schema({
   firstName: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   lastName: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
   },
   email: {
-    type: String,
+    type: Types.String,
     lowercase: true,
     trim: true,
     required: true,
   },
   password: {
-    type: String,
+    type: Types.String,
     trim: true,
     required: true,
     set(password) { return bcrypt.hashSync(password, 8); },

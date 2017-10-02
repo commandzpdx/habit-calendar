@@ -1,6 +1,12 @@
-const assert = require('chai').assert;
+/**
+ * Month Circle Model Test.
+ *
+ * @module server/models/MonthCircle.test
+ */
 
-const MonthCircle = require('../../models/monthCircle');
+const { assert } = require('chai');
+
+const MonthCircle = require('./MonthCircle');
 
 describe('monthCircle model', () => {
   it('example with all required fields', () => {
@@ -30,10 +36,9 @@ describe('monthCircle model', () => {
         textTransform: 'e',
       },
     }).validate()
-    .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
-
 });

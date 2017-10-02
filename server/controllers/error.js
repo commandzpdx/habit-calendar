@@ -1,67 +1,51 @@
 /**
  * Error Controller.
  *
- * @namespace errorController
+ * @module server/controllers/error
  */
 
-const errorController = {
+// Interal server error.
+// eslint-disable-next-line no-unused-vars
+const internalServer = (err, req, res, next) => res
+  .status(500)
+  .json({
+    message: 'Internal Server Error',
+    errors: [],
+  });
 
-  /**
-   * Error by error name.
-   */
+// Error by error name.
+const name = (err, req, res, next) => {
+  if (err.name !== 'ValidationError') return next(err);
 
-  errorByName(err, req, res, next) {
-    if (err.name !== 'ValidationError') return next();
-
-    return res
-      .status(400)
-      .json({
-        message: 'Mongoose Validation Error',
-        errors: err.errors,
-      });
-  },
-
-  /**
-   * Error by status code.
-   */
-
-  errorByCode(err, req, res, next) {
-    if (!err.code) return next();
-
-    return res
-      .status(err.code)
-      .json({
-        message: err.message,
-        errors: err.errors || [],
-      });
-  },
-
-  /**
-   * Interal server error.
-   */
-
-  internalServer(req, res) {
-    return res
-      .status(500)
-      .json({
-        message: 'Internal Server Error',
-        errors: [],
-      });
-  },
-
-  /**
-   * 404 error.
-   */
-
-  // eslint-disable-next-line no-unused-vars
-  notFound(req, res, next) {
-    return res
-      .status(404)
-      .json({
-        message: `Cannot ${req.method} ${req.path}`,
-      });
-  },
-
+  return res
+    .status(400)
+    .json({
+      message: 'Mongoose Validation Error',
+      errors: err.errors,
+    });
 };
 
-module.exports = errorController;
+// 404 error.
+// eslint-disable-next-line no-unused-vars
+const notFound = (req, res, next) => res
+  .status(404)
+  .json({ message: `Cannot ${req.method} ${req.path}` });
+
+// Error by status code.
+const status = (err, req, res, next) => {
+  if (!err.code) return next(err);
+
+  return res
+    .status(err.code)
+    .json({
+      message: err.message,
+      errors: err.errors || [],
+    });
+};
+
+module.exports = {
+  internalServer,
+  name,
+  notFound,
+  status,
+};

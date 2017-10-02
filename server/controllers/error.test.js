@@ -1,10 +1,15 @@
+/**
+ * Error Controller Test.
+ *
+ * @module server/controllers/error.test
+ */
+
 const { assert } = require('chai');
 
-const errorHandler = require('../../middlewares/handleErrors');
-const User = require('../../models/user');
+const errorController = require('./error');
+const User = require('../models/User');
 
 describe('handle-errors', () => {
-
   // Mock up the response object that's returned in handle-errors.js
   const resObj = {
     status(code) {
@@ -80,5 +85,31 @@ describe('handle-errors', () => {
         assert.equal(resObj.body.errors.lastName.message, 'Path `lastName` is required.');
       });
   });
+});
 
+describe('Handle Not Found Middleware', () => {
+  it('Should return a 404 reponse', () => {
+    const req = {
+      method: 'GET',
+      path: '/',
+    };
+
+    const res = {
+      json(body) {
+        this.body = JSON.stringify(body);
+      },
+      status(code) {
+        this.statusCode = code;
+
+        return this;
+      },
+    };
+
+    handleNotFound(req, res);
+
+    assert.equal(res.statusCode, 404);
+    assert.equal(res.body, JSON.stringify({
+      message: `Cannot ${req.method} ${req.path}`,
+    }));
+  });
 });

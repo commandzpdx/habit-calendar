@@ -1,47 +1,46 @@
 {
-  "name": "habit-calendar",
+  "name": "@didju/client",
   "version": "1.0.0",
-  "description": "",
+  "description": "Didju client-side codebase.",
   "private": true,
   "scripts": {
+    "prebuild": "rm -rf ../server/public",
     "build": "npm run build:css && react-scripts build",
+    "postbuild": "mv build ../server/public",
     "build:css": "node-sass-chokidar --include-path ./src/styles --include-path ./node_modules src/ --output src/ --output-style compressed",
     "build:css:watch": "npm run build:css && node-sass-chokidar --include-path ./src/styles --include-path ./node_modules src/ --output src/ --output-style compressed --watch --recursive",
     "eject": "react-scripts eject",
     "start": "concurrently 'npm run build:css:watch' 'react-scripts start'",
-    "prebuild": "rm -rf ../server/public",
     "pretest": "eslint .",
-    "postbuild": "mv build ../server/public",
     "test": "react-scripts test --env=jsdom"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "normalize.css": "^7.0.0",
-    "prop-types": "^15.5.10",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-router-dom": "^4.1.1"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "babel-preset-airbnb": "^2.2.3",
-    "concurrently": "^3.4.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.0.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^5.0.1",
-    "eslint-plugin-react": "^7.0.1",
-    "node-sass-chokidar": "0.0.2",
-    "react-scripts": "1.0.7"
+    "babel-preset-airbnb": "^2.4.0",
+    "concurrently": "^3.5.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "node-sass-chokidar": "0.0.3",
+    "react-scripts": "1.0.14"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/commandzpdx/habit-calendar.git"
+    "url": "git+https://github.com/didju/didju.git"
   },
-  "author": "commandzpdx (https://github.com/commandzpdx)",
+  "author": "Didju (https://github.com/didju)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/commandzpdx/habit-calendar/issues"
+    "url": "https://github.com/didju/didju/issues"
   },
-  "homepage": "https://github.com/commandzpdx/habit-calendar#readme",
+  "homepage": "https://github.com/didju/didju#readme",
   "proxy": "http://localhost:8000"
 }

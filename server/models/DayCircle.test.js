@@ -1,6 +1,12 @@
-const assert = require('chai').assert;
+/**
+ * Day Circle Model Test.
+ *
+ * @module server/models/DayCircle.test
+ */
 
-const DayCircle = require('../../models/dayCircle');
+const { assert } = require('chai');
+
+const DayCircle = require('./DayCircle');
 
 describe('dayCircle model', () => {
   it('example with all required fields', () => {
@@ -17,10 +23,10 @@ describe('dayCircle model', () => {
       textTransform: 'asdf',
     });
     return dayCircle1.validate()
-    .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
 
   it('requires textContent (invalid when no textContent', () => {
@@ -29,10 +35,10 @@ describe('dayCircle model', () => {
       textTransform: 'asdf',
     });
     return dayCircle2.validate()
-    .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
 
   it('requires textTransform (invalid when no textTransform', () => {
@@ -41,10 +47,9 @@ describe('dayCircle model', () => {
       textContent: 123,
     });
     return dayCircle3.validate()
-    .then(
-      () => { throw new Error('validation should not pass'); },
-      err => assert.isNotNull(err),
-    );
+      .then(
+        () => { throw new Error('validation should not pass'); },
+        err => assert.isNotNull(err),
+      );
   });
-
 });

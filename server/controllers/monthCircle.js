@@ -1,52 +1,40 @@
-const MonthCircle = require('../models/monthCircle');
+/**
+ * Month Circle Controller.
+ *
+ * @module server/controllers/monthCircle
+ */
 
-const monthCircleController = {
-  createMonth(req, res, next) {
-    const data = req.body;
+const MonthCircle = require('../models/MonthCircle');
 
-    return new MonthCircle(data).save()
-      .then((month) => {
-        return res.json(month);
-      })
-      .catch(next);
-  },
+const createMonthCircle = (req, res, next) => new MonthCircle(req.body)
+  .save()
+  .then((month) => res.json(month))
+  .catch(next);
 
-  getMonths(req, res, next) {
+const getMonthCircle = (req, res, next) => MonthCircle
+  .find(req.params.id)
+  .then((month) => res.json(month))
+  .catch(next);
 
-    return MonthCircle.find()
-    .then((months) => {
-      return res.json(months);
-    })
-    .catch(next);
-  },
+const getMonthCircles = (req, res, next) => MonthCircle
+  .find()
+  .then((months) => res.json(months))
+  .catch(next);
 
-  getMonth(req, res, next) {
+const deleteMonthCircle = (req, res, next) => MonthCircle
+  .findByIdAndRemove(req.params.id)
+  .then(() => res.json({ message: 'Month was deleted' }))
+  .catch(next);
 
-    return MonthCircle.find(req.params.id)
-    .then((month) => {
-      return res.json(month);
-    })
-    .catch(next);
-  },
+const updateMonthCircle = (req, res, next) => MonthCircle
+  .findByIdAndUpdate(req.params.id, req.body, { new: true })
+  .then((updatedMonth) => res.json(updatedMonth))
+  .catch(next);
 
-  deleteMonth(req, res, next) {
-
-    return MonthCircle.findByIdAndRemove(req.params.id)
-    .then(() => {
-      return res.json({ message: 'Month was deleted' });
-    })
-    .catch(next);
-  },
-
-  updateMonth(req, res, next) {
-
-    return MonthCircle.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((updatedMonth) => {
-      return res.json(updatedMonth);
-    })
-    .catch(next);
-  },
-
+module.exports = {
+  createMonthCircle,
+  deleteMonthCircle,
+  getMonthCircle,
+  getMonthCircles,
+  updateMonthCircle,
 };
-
-module.exports = monthCircleController;
